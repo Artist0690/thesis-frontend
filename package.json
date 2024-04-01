@@ -13,6 +13,7 @@
     "@types/react-dom": "^18.2.19",
     "autoprefixer": "^10.4.17",
     "axios": "^1.6.8",
+    "crypto-js": "^4.2.0",
     "postcss": "^8.4.35",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -51,5 +52,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/crypto-js": "^4.2.2"
   }
 }

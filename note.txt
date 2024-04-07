@@ -1,0 +1,10 @@
+frontend = crypto web api / jsencrypt/ forge
+backend = encrypt rsa
+
+✅ node-forge at both sides
+
+# use node-forge at both sides	
+# Reminder🚨- when user generates RSA key pairs at client side, use synchrounous key generation. Cause keys are stored in state
+ 	variables and async key generation takes a little time which causes keys to be null. And when making a request, public key that is 
+	to be sent to server will be null.
+# Reminder🚨- when using node-forge to perform RSA enc/dec processes, be careful to use "RSA-OAEP" scheme.

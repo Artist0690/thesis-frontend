@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import z from "zod";
+import z, { string } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "react-router-dom";
 import { signup_controller } from "../controllers/signup_controller";
 import { AxiosError } from "axios";
+import JSEncrypt from "jsencrypt";
 
 const Signup_Page = () => {
   const errorMessageSchema = z.object({ message: z.string() });
@@ -42,6 +43,9 @@ const Signup_Page = () => {
 
   const handleSignup: SubmitHandler<FormType> = async (data) => {
     console.log(data);
+
+    // RSA 🔓🔐🔧
+
     signup_controller(data)
       .then((response) => {
         console.log(response.data);
@@ -62,7 +66,7 @@ const Signup_Page = () => {
       <div className="flex flex-col min-w-[500px] bg-white gap-y-5 shadow-lg p-10">
         <div>
           <h1 className="text-5xl mb-4 font-[poppins] font-semibold capitalize text-zinc-600 text-center">
-            login form
+            signup form
           </h1>
         </div>
         <form

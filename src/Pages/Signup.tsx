@@ -2,14 +2,21 @@ import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import z, { string } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { signup_controller } from "../controllers/signup_controller";
 import { AxiosError } from "axios";
-import JSEncrypt from "jsencrypt";
+import KeyGeneration from "../crypto/KeyGeneration";
+import { signupResponseSchema } from "../zod/signupResponse";
+import { dexie_db } from "../dexie_db/db";
 
 const Signup_Page = () => {
   const errorMessageSchema = z.object({ message: z.string() });
   const [errorMessage, seterrorMessage] = useState<string | null>(null);
+
+  const navigate = useNavigate();
+
+  // generate RSA key pairs 🔑🗝️
+  const { privateKey, publicKey } = KeyGeneration();
 
   const FormSchema = z.object({
     name: z
@@ -44,12 +51,30 @@ const Signup_Page = () => {
   const handleSignup: SubmitHandler<FormType> = async (data) => {
     console.log(data);
 
-    // RSA 🔓🔐🔧
-
-    signup_controller(data)
+    const payload = {
+      ...data,
+      rsa_public_key: publicKey as string,
+    };
+    // send request to signup
+    signup_controller(payload)
       .then((response) => {
         console.log(response.data);
+        // store RSA private key in somewhere 🎁
         seterrorMessage(null);
+        // store private key in indexeddb
+        const zCheck = signupResponseSchema.safeParse(response.data);
+        if (!zCheck.success) {
+          seterrorMessage("Something went wrong.");
+          return;
+        }
+        dexie_db.key_table
+          .add({
+            key: privateKey as string,
+            userId: zCheck.data.id,
+          })
+          .then((result) => console.log(result))
+          .catch((error) => console.log(error));
+        navigate("/login");
       })
       .catch((err) => {
         const error = err as AxiosError;

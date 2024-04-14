@@ -5,6 +5,7 @@ import Landing from "./Pages/landing";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login_Page from "./Pages/login";
 import Signup_Page from "./Pages/signup";
+import TestSomething from "./Pages/test";
 
 function App() {
   const router = createBrowserRouter([
@@ -23,6 +24,10 @@ function App() {
     {
       path: "/signup",
       element: <Signup_Page />,
+    },
+    {
+      path: "/test",
+      element: <TestSomething />,
     },
   ]);
   return (

@@ -4,6 +4,7 @@ type Props = {
   name: string;
   email: string;
   password: string;
+  rsa_public_key: string;
 };
 
 export const signup_controller = async (payload: Props) => {

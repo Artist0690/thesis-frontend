@@ -1,4 +1,5 @@
 import useGainAccess from "../hooks/useGainAccess";
+import useRetrievePrvkey from "../hooks/useRetrievePrvkey";
 import PanelOne from "../Panel_One/PanelOne";
 import PanelTwo from "../Panel_Two/PanelTwo";
 import { accessToken_store } from "../store/accessToken_store";
@@ -12,6 +13,9 @@ const Chat_landing = () => {
   const { message } = useGainAccess();
 
   const { accessToken } = accessToken_store();
+
+  // retrieve associated private key from indexed db
+  const retrievePrvKey = useRetrievePrvkey();
 
   console.log("accesstoken: ", accessToken);
 

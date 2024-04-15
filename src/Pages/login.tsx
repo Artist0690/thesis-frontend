@@ -6,7 +6,7 @@ import { data } from "autoprefixer";
 import { Link, useNavigate } from "react-router-dom";
 import { login_controller } from "../controllers/login_controller";
 import { AxiosError } from "axios";
-import { accessToken_store } from "../store/accessToken_store";
+import { userInfo_store } from "../store/userInfo_store";
 
 const Login_Page = () => {
   const errorMessageSchema = z.object({
@@ -42,7 +42,7 @@ const Login_Page = () => {
 
   const navigate = useNavigate();
   //store
-  const { setAccessToken } = accessToken_store();
+  const { setUserInfo } = userInfo_store();
 
   const handleLogin: SubmitHandler<FormType> = async (data) => {
     console.log(data);
@@ -51,9 +51,15 @@ const Login_Page = () => {
         // console.log(response.data);
         seterrorMessage(null);
         // set accesstoken in store
-        const schema = z.object({ accessToken: z.string() });
+        const schema = z.object({
+          id: z.string(),
+          name: z.string(),
+          email: z.string(),
+          accessToken: z.string(),
+        });
         const check = schema.safeParse(response.data);
-        if (check.success) setAccessToken(check.data.accessToken);
+        // store userInfo into global state
+        if (check.success) setUserInfo(check.data);
         navigate("/chat");
       })
       .catch((err) => {

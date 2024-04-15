@@ -1,8 +1,11 @@
+import { useEffect } from "react";
 import useGainAccess from "../hooks/useGainAccess";
 import useRetrievePrvkey from "../hooks/useRetrievePrvkey";
 import PanelOne from "../Panel_One/PanelOne";
 import PanelTwo from "../Panel_Two/PanelTwo";
-import { accessToken_store } from "../store/accessToken_store";
+import { userInfo_store } from "../store/userInfo_store";
+import { useLiveQuery } from "dexie-react-hooks";
+import { dexie_db } from "../dexie_db/db";
 
 const Chat_landing = () => {
   // check user is logged in.
@@ -12,12 +15,12 @@ const Chat_landing = () => {
 
   const { message } = useGainAccess();
 
-  const { accessToken } = accessToken_store();
+  const { id, name, email, accessToken, rsa_private_key } = userInfo_store();
 
   // retrieve associated private key from indexed db
   const retrievePrvKey = useRetrievePrvkey();
 
-  console.log("accesstoken: ", accessToken);
+  console.log("UserInfo: ", { id, email, accessToken, rsa_private_key, name });
 
   return (
     <div className="grid grid-cols-3 gap-3 py-3 px-10 items-center min-h-screen text-slate-400 dark:text-white bg-white dark:bg-black">

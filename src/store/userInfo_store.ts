@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-type UserInfo = {
+export type UserInfo = {
   name: string | null;
   email: string | null;
   id: string | null;

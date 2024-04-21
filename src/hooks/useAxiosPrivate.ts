@@ -2,19 +2,18 @@ import React, { useEffect } from "react";
 import { axiosPrivate } from "../api/axios";
 import {
   AxiosError,
-  AxiosHeaders,
   AxiosRequestConfig,
   InternalAxiosRequestConfig,
 } from "axios";
-import { error } from "console";
+import { userInfo_store } from "../store/userInfo_store";
+import useRefresh from "./useRefresh";
 
-type Props = {
-  accessToken: string;
-  refresh_fn: () => Promise<void>;
-};
+const useAxiosPrivate = () => {
+  const { accessToken } = userInfo_store();
+  const refresh_token = useRefresh();
 
-const useAxiosPrivate = ({ accessToken, refresh_fn }: Props) => {
   useEffect(() => {
+    // console.log("inside useAxiosPrivate: ", accessToken);
     const requestIntercept = axiosPrivate.interceptors.request.use(
       (config: InternalAxiosRequestConfig<any>) => {
         if (!config.headers["Authorization"]) {
@@ -32,7 +31,8 @@ const useAxiosPrivate = ({ accessToken, refresh_fn }: Props) => {
       async (error: AxiosError) => {
         const prevRequest = error.config;
         if (error.response?.status === 403) {
-          refresh_fn();
+          // to refresh access token and store in global state
+          refresh_token();
           prevRequest!.headers["Authorization"] = `Bearer ${accessToken}`;
           return axiosPrivate(prevRequest as AxiosRequestConfig);
         }
@@ -44,7 +44,7 @@ const useAxiosPrivate = ({ accessToken, refresh_fn }: Props) => {
       axiosPrivate.interceptors.request.eject(requestIntercept);
       axiosPrivate.interceptors.response.eject(responseIntercept);
     };
-  }, [accessToken, refresh_fn]);
+  }, [accessToken, refresh_token]);
   return axiosPrivate;
 };
 

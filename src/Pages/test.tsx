@@ -1,44 +1,47 @@
 import React, { useEffect, useState } from "react";
-import { dexie_db } from "../dexie_db/db";
-import { useLiveQuery } from "dexie-react-hooks";
-import z from "zod";
+import { userInfo_store } from "../store/userInfo_store";
+import useRefresh from "../hooks/useRefresh";
+import { axiosPrivate } from "../api/axios";
 
 const TestSomething = () => {
-  // const zKeySchema = z.array(
-  //   z.object({
-  //     id: z.number(),
-  //     userId: z.string(),
-  //     key: z.string(),
-  //   })
-  // );
+  const { accessToken } = userInfo_store();
 
-  // type Keys = z.infer<typeof zKeySchema>;
+  const refresh = useRefresh();
 
-  // const [keys, setkeys] = useState<Keys | null>(null);
+  useEffect(() => {
+    refresh();
+  }, []);
 
-  // const allKeys = async () => await dexie_db.privateKey.toArray();
+  useRefresh();
+  const handleClick = () => {
+    refresh();
+    console.log(accessToken);
+  };
 
-  // const retrieveKeys = useLiveQuery(allKeys);
+  const handleTest = async () => {
+    console.log("Now i'm trying with this token: ", accessToken);
+    axiosPrivate
+      .get("chats/test_something", {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      })
+      .then((res) => console.log(res.data))
+      .catch((error) => console.log(error));
+  };
 
-  // const addNewKey = async () => {
-  //   try {
-  //     const id = await dexie_db.privateKey.add({ key: "1234", userId: "1234" });
-  //     console.log(id);
-  //     console.log(retrieveKeys);
-  //     // const zKeyCheck = zKeySchema.safeParse(retrieveKeys);
-  //     // if (zKeyCheck.success) {
-  //     //   setkeys(zKeyCheck.data);
-  //     // }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   addNewKey();
-  // }, []);
-
-  return <div>test something</div>;
+  return (
+    <div>
+      test something
+      <button
+        className="bg-zinc-500 text-white p-3"
+        onClick={() => handleClick()}
+      >
+        click
+      </button>
+      <button className="bg-green-300 p-3 " onClick={() => handleTest()}>
+        test
+      </button>
+    </div>
+  );
 };
 
 export default TestSomething;

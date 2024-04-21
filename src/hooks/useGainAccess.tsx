@@ -3,6 +3,7 @@ import axios from "../api/axios";
 import { useNavigate } from "react-router-dom";
 import z, { string } from "zod";
 import { userInfo_store } from "../store/userInfo_store";
+import { retrievePrvKey_controller } from "../controllers/retrievePrvKey_controller";
 
 const useGainAccess = () => {
   const Zschema = z.object({
@@ -12,32 +13,36 @@ const useGainAccess = () => {
     email: z.string(),
   });
 
-  type Props = z.infer<typeof Zschema>;
+  type UserInfo = z.infer<typeof Zschema>;
+  const [userId, setuserId] = useState<string | null>(null);
 
   const navigate = useNavigate();
 
   // store
-  const { setUserInfo } = userInfo_store();
+  const { setUserInfo, id } = userInfo_store();
 
   const checkGainAccess = async () => {
-    try {
-      const response = await axios.get("/auth/refresh");
-      const Zcheck = Zschema.safeParse(response.data);
-      if (Zcheck.success) {
-        setUserInfo(Zcheck.data);
-      }
-    } catch (error) {
-      console.log("Login required.");
-      // redirect to login page
-      navigate("/login");
-    }
+    axios
+      .get("/auth/check")
+      .then((response) => {
+        const Zcheck = Zschema.safeParse(response.data);
+        if (Zcheck.success) {
+          setUserInfo(Zcheck.data);
+          setuserId(Zcheck.data.id);
+        }
+      })
+      .catch((error) => {
+        console.log("Login required.");
+        // redirect to login page
+        navigate("/login");
+      });
   };
 
   useEffect(() => {
     checkGainAccess();
   }, []);
 
-  return { message: "ok" };
+  return { id: userId };
 };
 
 export default useGainAccess;

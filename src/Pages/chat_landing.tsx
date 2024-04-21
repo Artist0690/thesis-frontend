@@ -1,26 +1,32 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useGainAccess from "../hooks/useGainAccess";
-import useRetrievePrvkey from "../hooks/useRetrievePrvkey";
 import PanelOne from "../Panel_One/PanelOne";
 import PanelTwo from "../Panel_Two/PanelTwo";
 import { userInfo_store } from "../store/userInfo_store";
-import { useLiveQuery } from "dexie-react-hooks";
-import { dexie_db } from "../dexie_db/db";
+import useRetrievePrvkey from "../hooks/useRetrievePrvkey";
+import useFetchAllChats from "../hooks/useFetchAllChats";
+import { chats_store } from "../store/chats_store";
+import { retrievePrvKey_controller } from "../controllers/retrievePrvKey_controller";
 
 const Chat_landing = () => {
-  // check user is logged in.
-  // how to check - do refresh token process
-  // if refresh token is invalid or absent, user need to login again.
-  // if user got new access token, user dont need to login
+  // local state
+  const [userId, setuserId] = useState<string | null>(null);
 
-  const { message } = useGainAccess();
+  // store
+  const userStore = userInfo_store();
+  const chatStore = chats_store();
 
-  const { id, name, email, accessToken, rsa_private_key } = userInfo_store();
+  // checking whether user need to login or not 1️⃣
+  const { id } = useGainAccess();
 
-  // retrieve associated private key from indexed db
-  const retrievePrvKey = useRetrievePrvkey();
+  useEffect(() => {
+    if (id)
+      // retrieve private key 2️⃣
+      retrievePrvKey_controller({ userId: id, setKey: userStore.setUserInfo });
+  }, [id]);
 
-  console.log("UserInfo: ", { id, email, accessToken, rsa_private_key, name });
+  console.log("UserInfo:", userStore);
+  // console.log("Chat Lists:", chatStore);
 
   return (
     <div className="grid grid-cols-3 gap-3 py-3 px-10 items-center min-h-screen text-slate-400 dark:text-white bg-white dark:bg-black">

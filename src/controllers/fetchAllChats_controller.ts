@@ -6,13 +6,12 @@ import { AxiosInstance } from "axios";
 type Chat = z.infer<typeof ChatSchema>;
 
 type Props = {
-  userId: string;
   setChatLists: (payload: Chat[]) => void;
   fetcher: AxiosInstance;
 };
 
 export const fetchAllChats_controller = async (payload: Props) => {
-  const { setChatLists, userId, fetcher } = payload;
+  const { setChatLists, fetcher } = payload;
   fetcher
     .post("chats/get_all_chats")
     .then((response) => {
@@ -20,6 +19,7 @@ export const fetchAllChats_controller = async (payload: Props) => {
       const check_chatLists = z.array(ChatSchema).safeParse(response.data);
       if (!check_chatLists.success) {
         console.log("Chat Lists Type Mismatch!");
+        console.log("ChatList Type error:", check_chatLists.error);
         return;
       }
       const chatLists = check_chatLists.data;

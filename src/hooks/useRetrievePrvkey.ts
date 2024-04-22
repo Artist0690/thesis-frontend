@@ -5,7 +5,7 @@ import { userInfo_store } from "../store/userInfo_store";
 
 const useRetrievePrvkey = () => {
   const [key, setkey] = useState<string | null>(null);
-  const { id, setUserInfo } = userInfo_store();
+  const { _id, setUserInfo } = userInfo_store();
 
   const setPrvKey2Store = async () => {
     // -------------------------------------------------------------------
@@ -14,7 +14,7 @@ const useRetrievePrvkey = () => {
     // -------------------------------------------------------------------
     const retrieveKeys = await dexie_db.key_table.toArray();
     console.log("Start retrieving prvKey from indexed db.");
-    const keyData = retrieveKeys?.filter((i) => i.userId == id);
+    const keyData = retrieveKeys?.filter((i) => i.userId == _id);
     if (keyData && keyData.length > 0) {
       // console.log("key data exists: ", keyData);
       const prvKey = keyData[0].key;
@@ -25,7 +25,7 @@ const useRetrievePrvkey = () => {
 
   useEffect(() => {
     setPrvKey2Store();
-  }, [id]);
+  }, [_id]);
 
   // return { prvKey: key };
 };

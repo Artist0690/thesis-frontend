@@ -35,7 +35,7 @@ const useFetchAllChats = () => {
 
   useEffect(() => {
     fetchAllChats();
-  }, [userInfo.id]);
+  }, [userInfo._id]);
 };
 
 export default useFetchAllChats;

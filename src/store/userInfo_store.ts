@@ -1,12 +1,15 @@
 import { create } from "zustand";
+import z from "zod";
 
-export type UserInfo = {
-  name: string | null;
-  email: string | null;
-  id: string | null;
-  accessToken: string | null;
-  rsa_private_key: string | null;
-};
+export const UserInfoSchema = z.object({
+  accessToken: z.string().nullable(),
+  _id: z.string().nullable(),
+  name: z.string().nullable(),
+  email: z.string().nullable(),
+  rsa_private_key: z.string().nullable(),
+});
+
+export type UserInfo = z.infer<typeof UserInfoSchema>;
 
 type Setter = {
   setUserInfo: (payload: Partial<UserInfo>) => void;
@@ -17,7 +20,7 @@ type Store = UserInfo & Setter;
 export const userInfo_store = create<Store>((set) => ({
   accessToken: null,
   email: null,
-  id: null,
+  _id: null,
   name: null,
   rsa_private_key: null,
   setUserInfo: (payload: Partial<UserInfo>) =>

@@ -22,7 +22,11 @@ const Chat_landing = () => {
   useEffect(() => {
     if (id)
       // retrieve private key 2️⃣
-      retrievePrvKey_controller({ userId: id, setKey: userStore.setUserInfo });
+      console.log("we retrieve prv key 2️⃣");
+    retrievePrvKey_controller({
+      userId: id as string,
+      setKey: userStore.setUserInfo,
+    });
   }, [id]);
 
   console.log("UserInfo:", userStore);

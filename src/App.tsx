@@ -4,8 +4,9 @@ import Chat_landing from "./Pages/chat_landing";
 import Landing from "./Pages/landing";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login_Page from "./Pages/login";
-import Signup_Page from "./Pages/signup";
 import TestSomething from "./Pages/test";
+import Signup_Page from "./Pages/Signup";
+import { Toaster } from "sonner";
 
 function App() {
   const router = createBrowserRouter([
@@ -33,6 +34,7 @@ function App() {
   return (
     <div>
       <RouterProvider router={router} />
+      <Toaster richColors closeButton duration={5000} />
     </div>
   );
 }

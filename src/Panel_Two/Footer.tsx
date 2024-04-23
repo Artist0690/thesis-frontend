@@ -1,8 +1,15 @@
 import React, { ChangeEvent, useState } from "react";
 import { IoSendSharp } from "react-icons/io5";
+import { toast } from "sonner";
+import { sendMessage_controller } from "../controllers/sendMessage_controller";
+import { currentChat_store } from "../store/currentChat_store";
 
 const Footer = () => {
   const [input, setinput] = useState<string>("");
+
+  // store
+  const { currentChat } = currentChat_store();
+
   const buttonColor =
     input.trim().length > 0
       ? "text-purple-700 hover:text-purple-500"
@@ -12,10 +19,15 @@ const Footer = () => {
     setinput(e.target.value);
   };
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     const validInput = input.trim().length > 0;
     if (validInput) {
-      alert("input : " + input);
+      // toast.info(input, { position: "top-right" });
+      sendMessage_controller({
+        chatId: currentChat?._id as string,
+        content: input,
+      });
+      setinput("");
       return;
     }
   };

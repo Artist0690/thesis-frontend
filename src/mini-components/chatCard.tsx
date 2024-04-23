@@ -2,6 +2,7 @@ import z from "zod";
 import { ChatSchema } from "../zod/chatSchema";
 import ironMan from "../assets/icons8-iron-man.svg";
 import { userInfo_store } from "../store/userInfo_store";
+import { currentChat_store } from "../store/currentChat_store";
 
 type Chat = z.infer<typeof ChatSchema>;
 
@@ -14,13 +15,20 @@ const ChatCard = (props: Props) => {
 
   // store
   const { _id: currentUserId } = userInfo_store();
+  const { setCurrentChat, currentChat } = currentChat_store();
 
   const chatMate = chat.users.filter(
-    (user) => user.userInfo._id! == currentUserId
+    (user) => user.userInfo._id !== currentUserId
   )[0];
+
+  const handleClick = () => {
+    setCurrentChat(chat);
+    console.log("current chat is:", currentChat);
+  };
 
   return (
     <button
+      onClick={handleClick}
       className={`grid grid-cols-6 gap-5 border border-slate-400 hover:border-purple-500 dark:hover:border-purple-500 hover:bg-purple-500 hover:bg-opacity-10 dark:border-white px-2 py-3 focus:ring-1 focus:ring-purple-500 focus:outline-none rounded-lg`}
     >
       <div className="grid col-span-2 items-center justify-center">

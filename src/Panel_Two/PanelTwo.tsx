@@ -5,7 +5,7 @@ import Body from "./Body";
 
 const PanelTwo = () => {
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full overflow-hidden">
       <Header />
       <Body />
       <Footer />

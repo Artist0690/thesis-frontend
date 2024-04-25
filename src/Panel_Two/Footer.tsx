@@ -1,14 +1,16 @@
-import React, { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { IoSendSharp } from "react-icons/io5";
-import { toast } from "sonner";
 import { sendMessage_controller } from "../controllers/sendMessage_controller";
 import { currentChat_store } from "../store/currentChat_store";
+import { messageLists_store } from "../store/messageLists_store";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 const Footer = () => {
   const [input, setinput] = useState<string>("");
 
   // store
-  const { currentChat } = currentChat_store();
+  const { currentChat, updateLatestMsg } = currentChat_store();
+  const { addMessage } = messageLists_store();
 
   const buttonColor =
     input.trim().length > 0
@@ -19,15 +21,22 @@ const Footer = () => {
     setinput(e.target.value);
   };
 
+  // axios instance
+  const fetcher = useAxiosPrivate();
+
   const sendMessage = async () => {
     const validInput = input.trim().length > 0;
     if (validInput) {
-      // toast.info(input, { position: "top-right" });
       sendMessage_controller({
         chatId: currentChat?._id as string,
         content: input,
+        addMessage: addMessage,
+        updateLatestMsg: updateLatestMsg,
+        fetcher,
       });
+      // reset input
       setinput("");
+
       return;
     }
   };

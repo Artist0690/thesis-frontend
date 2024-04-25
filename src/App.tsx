@@ -1,4 +1,3 @@
-import { AxiosError, AxiosResponse } from "axios";
 import "./App.css";
 import Chat_landing from "./Pages/chat_landing";
 import Landing from "./Pages/landing";

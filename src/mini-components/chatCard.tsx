@@ -23,7 +23,7 @@ const ChatCard = (props: Props) => {
 
   const handleClick = () => {
     setCurrentChat(chat);
-    console.log("current chat is:", currentChat);
+    // console.log("current chat is:", currentChat);
   };
 
   return (

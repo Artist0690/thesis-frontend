@@ -19,6 +19,6 @@ export const ChatSchema = z.object({
   chatName: z.string(),
   isGroupChat: z.boolean(),
   users: z.array(UserArray),
-  latestMessage: MessageSchema,
+  latestMessage: MessageSchema.nullable(),
   // groupAdmin: UserSchema,
 });

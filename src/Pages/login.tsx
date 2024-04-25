@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { data } from "autoprefixer";
 import { Link, useNavigate } from "react-router-dom";
 import { login_controller } from "../controllers/login_controller";
 import { AxiosError } from "axios";
@@ -37,7 +36,7 @@ const Login_Page = () => {
     handleSubmit,
     trigger,
     reset,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<FormType>({ resolver: zodResolver(FormSchema) });
 
   const navigate = useNavigate();

@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { currentChat_store } from "../store/currentChat_store";
-import PlayAnimation from "../mini-components/playAnimation";
-import z from "zod";
-import { MessageSchema } from "../zod/chatSchema";
+import PlayAnimation from "../animation/playAnimation";
 import useFetchAllMessages from "../hooks/useFetchAllMessages";
 import ScrollableFeed from "react-scrollable-feed";
 import { v4 as uuid } from "uuid";
 import ChatBubble from "../mini-components/chatBubble";
 import { messageLists_store } from "../store/messageLists_store";
+import TypingAnimation from "../animation/TypingAnimation";
+import useStartSocket from "../hooks/useStartSocket";
+import { socket_store } from "../store/socket_store";
 
 const MessageContainer = () => {
   // store
@@ -15,6 +16,7 @@ const MessageContainer = () => {
 
   // store
   const { messageLists } = messageLists_store();
+  const { isTyping } = socket_store();
 
   // use a hook that fetches messages assciated with chat
   const { msgLists } = useFetchAllMessages();
@@ -35,9 +37,9 @@ const MessageContainer = () => {
 
   return (
     <div className="w-full max-h-[520px] rounded-lg bg-white bg-opacity-40 dark:bg-opacity-10">
-      {currentChat && currentChat.latestMessage?._id
+      {/* {currentChat && currentChat.latestMessage?._id
         ? currentChat.latestMessage._id
-        : "no id"}
+        : "no id"} */}
       {messageLists == null ? (
         <p>Loading</p>
       ) : (
@@ -45,6 +47,8 @@ const MessageContainer = () => {
           {messageLists.map((message) => (
             <ChatBubble key={uuid()} message={message} />
           ))}
+          {/* animation */}
+          {isTyping && <TypingAnimation />}
         </ScrollableFeed>
       )}
     </div>

@@ -4,6 +4,11 @@ import { sendMessage_controller } from "../controllers/sendMessage_controller";
 import { currentChat_store } from "../store/currentChat_store";
 import { messageLists_store } from "../store/messageLists_store";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import { io } from "socket.io-client";
+import useStartSocket from "../hooks/useStartSocket";
+
+const URL = "http://localhost:5000";
+const socket = io(URL);
 
 const Footer = () => {
   const [input, setinput] = useState<string>("");
@@ -11,6 +16,14 @@ const Footer = () => {
   // store
   const { currentChat, updateLatestMsg } = currentChat_store();
   const { addMessage } = messageLists_store();
+
+  // hook for socket
+  const { handleStopTyping, handleTyping } = useStartSocket({
+    input: input,
+    sender: currentChat?._id as string,
+    setinput: setinput,
+    roomId: currentChat?._id as string,
+  });
 
   const buttonColor =
     input.trim().length > 0
@@ -20,6 +33,12 @@ const Footer = () => {
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     setinput(e.target.value);
   };
+
+  useEffect(() => {
+    socket.on("connection", (data: any) => {
+      console.log(data);
+    });
+  }, []);
 
   // axios instance
   const fetcher = useAxiosPrivate();
@@ -33,6 +52,7 @@ const Footer = () => {
         addMessage: addMessage,
         updateLatestMsg: updateLatestMsg,
         fetcher,
+        socket,
       });
       // reset input
       setinput("");
@@ -48,6 +68,8 @@ const Footer = () => {
           type="text"
           value={input}
           onChange={(e) => handleInput(e)}
+          onFocus={(e) => handleTyping(e)}
+          onBlur={handleStopTyping}
           className="px-2 py-3 min-w-[400px] rounded-lg outline-none bg-white dark:bg-zinc-600 text-zinc-600 dark:text-white border border-zinc-300 dark:border-zinc-500"
         />
       </div>

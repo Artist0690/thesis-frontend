@@ -6,6 +6,8 @@ import { messageLists_store } from "../store/messageLists_store";
 import { currentChat_store } from "../store/currentChat_store";
 import { log } from "console";
 import { AxiosInstance } from "axios";
+import { Socket } from "socket.io-client";
+import { socket_store } from "../store/socket_store";
 
 type Message = z.infer<typeof MessageSchema>;
 
@@ -15,10 +17,18 @@ type Props = {
   addMessage: (payload: Message) => void;
   updateLatestMsg: (payload: { chatId: string; msgId: string }) => void;
   fetcher: AxiosInstance;
+  socket: Socket;
 };
 
 export const sendMessage_controller = async (props: Props) => {
-  const { updateLatestMsg, addMessage, chatId, content, fetcher } = props;
+  const {
+    updateLatestMsg,
+    addMessage,
+    chatId,
+    content,
+    fetcher,
+    socket,
+  } = props;
 
   fetcher
     .post("messages/send", { chatId, content })
@@ -40,6 +50,8 @@ export const sendMessage_controller = async (props: Props) => {
       // -------------------------------
       console.log("Trying to update msg lists: ");
       addMessage(checkMessage.data);
+      // socket
+      socket.emit("chat", checkMessage.data);
     })
     .catch((err) => {
       toast.error("Failed to send message!");

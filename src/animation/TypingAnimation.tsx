@@ -3,7 +3,7 @@ import typing from "../assets/typing.json";
 import Lottie, { LottiePlayer } from "lottie-react";
 
 const TypingAnimation = () => {
-  return <Lottie animationData={typing} className="w-20 tx-purple-400" />;
+  return <Lottie animationData={typing} className="w-20 h-12 tx-purple-400" />;
 };
 
 export default TypingAnimation;

@@ -4,25 +4,33 @@ import { sendMessage_controller } from "../controllers/sendMessage_controller";
 import { currentChat_store } from "../store/currentChat_store";
 import { messageLists_store } from "../store/messageLists_store";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
-import { io } from "socket.io-client";
+import { Socket } from "socket.io-client";
 import useStartSocket from "../hooks/useStartSocket";
+import { userInfo_store } from "../store/userInfo_store";
+import { toast } from "sonner";
 
-const URL = "http://localhost:5000";
-const socket = io(URL);
+type Props = {
+  socket: Socket;
+};
 
-const Footer = () => {
+const Footer = (props: Props) => {
+  const { socket } = props;
+
+  // local state
   const [input, setinput] = useState<string>("");
 
   // store
+  const { _id: currentUserId } = userInfo_store();
   const { currentChat, updateLatestMsg } = currentChat_store();
   const { addMessage } = messageLists_store();
 
   // hook for socket
   const { handleStopTyping, handleTyping } = useStartSocket({
     input: input,
-    sender: currentChat?._id as string,
     setinput: setinput,
     roomId: currentChat?._id as string,
+
+    socket,
   });
 
   const buttonColor =
@@ -34,18 +42,13 @@ const Footer = () => {
     setinput(e.target.value);
   };
 
-  useEffect(() => {
-    socket.on("connection", (data: any) => {
-      console.log(data);
-    });
-  }, []);
-
-  // axios instance
+  // hook : axios instance
   const fetcher = useAxiosPrivate();
 
   const sendMessage = async () => {
     const validInput = input.trim().length > 0;
     if (validInput) {
+      // TODO: send message
       sendMessage_controller({
         chatId: currentChat?._id as string,
         content: input,
@@ -53,6 +56,9 @@ const Footer = () => {
         updateLatestMsg: updateLatestMsg,
         fetcher,
         socket,
+        receiver: currentChat!.users.filter(
+          (user) => user.userInfo._id !== currentUserId
+        )[0].userInfo._id,
       });
       // reset input
       setinput("");

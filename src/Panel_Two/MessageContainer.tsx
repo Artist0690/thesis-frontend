@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { currentChat_store } from "../store/currentChat_store";
 import PlayAnimation from "../animation/playAnimation";
 import useFetchAllMessages from "../hooks/useFetchAllMessages";
@@ -7,7 +7,6 @@ import { v4 as uuid } from "uuid";
 import ChatBubble from "../mini-components/chatBubble";
 import { messageLists_store } from "../store/messageLists_store";
 import TypingAnimation from "../animation/TypingAnimation";
-import useStartSocket from "../hooks/useStartSocket";
 import { socket_store } from "../store/socket_store";
 
 const MessageContainer = () => {
@@ -47,8 +46,12 @@ const MessageContainer = () => {
           {messageLists.map((message) => (
             <ChatBubble key={uuid()} message={message} />
           ))}
-          {/* animation */}
-          {isTyping && <TypingAnimation />}
+          {/* TODO: play typing animation */}
+          {isTyping && (
+            <div>
+              <TypingAnimation />
+            </div>
+          )}
         </ScrollableFeed>
       )}
     </div>

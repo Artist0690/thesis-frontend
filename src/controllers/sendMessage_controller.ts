@@ -1,19 +1,15 @@
 import z from "zod";
-import { axiosPrivate } from "../api/axios";
 import { toast } from "sonner";
 import { MessageSchema } from "../zod/chatSchema";
-import { messageLists_store } from "../store/messageLists_store";
-import { currentChat_store } from "../store/currentChat_store";
-import { log } from "console";
 import { AxiosInstance } from "axios";
 import { Socket } from "socket.io-client";
-import { socket_store } from "../store/socket_store";
 
 type Message = z.infer<typeof MessageSchema>;
 
 type Props = {
   chatId: string;
   content: string;
+  receiver: string;
   addMessage: (payload: Message) => void;
   updateLatestMsg: (payload: { chatId: string; msgId: string }) => void;
   fetcher: AxiosInstance;
@@ -28,6 +24,7 @@ export const sendMessage_controller = async (props: Props) => {
     content,
     fetcher,
     socket,
+    receiver,
   } = props;
 
   fetcher
@@ -40,18 +37,24 @@ export const sendMessage_controller = async (props: Props) => {
         return;
       }
       const { _id: newMsgId, chat } = checkMessage.data;
-      // --------------------------------------------------
-      // |update latestMessage of current chat & chat lists ⛔
-      // --------------------------------------------------
+
+      // TODO: update latestMessage of current chat & chat lists
+
       console.log("Trying to update latest message id");
       updateLatestMsg({ chatId: chat, msgId: newMsgId });
-      // -------------------------------
-      // |add new message to local state
-      // -------------------------------
+
+      // TODO: add new message to local state
+
       console.log("Trying to update msg lists: ");
       addMessage(checkMessage.data);
-      // socket
-      socket.emit("chat", checkMessage.data);
+      // TODO: emit socket event
+
+      socket.emit("chat", { ...checkMessage.data, receiver });
+
+      // TODO: listen test event
+      socket.on("test", (data: string) => {
+        toast.success(data, { position: "top-right", duration: 2000 });
+      });
     })
     .catch((err) => {
       toast.error("Failed to send message!");

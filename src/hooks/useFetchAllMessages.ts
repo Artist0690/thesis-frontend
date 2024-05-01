@@ -25,9 +25,8 @@ const useFetchAllMessages = () => {
           console.log("Message Type Mismatch!", checkMessages.error);
           return;
         }
-        // ------------------
-        // |set message lists
-        // ------------------
+
+        // TODO: set message lists
         setMessageLists(checkMessages.data);
         setmsgLists(checkMessages.data);
       })

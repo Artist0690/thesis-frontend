@@ -22,6 +22,7 @@ const Header = () => {
           <IoIosHome className="w-8 h-8 text-black dark:text-white cursor-pointer" />
         </Link>
       </span>
+      {/* CUSTOM: */}
       <SideDrawer open={openSideDrawer} setOpen={toggleSideDrawer} />
     </div>
   );

@@ -18,6 +18,7 @@ type Store = Attribute & Action;
 export const messageLists_store = create<Store>((set) => ({
   messageLists: [],
   addMessage: (payload) => {
+    // console.log("adding new msg to msgLists.");
     set((state) => ({
       messageLists: [...state.messageLists, payload],
     }));

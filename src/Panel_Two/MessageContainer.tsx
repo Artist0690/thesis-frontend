@@ -35,7 +35,7 @@ const MessageContainer = () => {
     );
 
   return (
-    <div className="w-full max-h-[520px] rounded-lg bg-white bg-opacity-40 dark:bg-opacity-10">
+    <div className="w-full max-h-[520px] rounded-lg bg-white bg-opacity-40 dark:bg-opacity-10 shadow-inner dark:shadow-none shadow-zinc-300">
       {/* {currentChat && currentChat.latestMessage?._id
         ? currentChat.latestMessage._id
         : "no id"} */}
@@ -48,7 +48,7 @@ const MessageContainer = () => {
           ))}
           {/* TODO: play typing animation */}
           {isTyping && (
-            <div>
+            <div className="mt-auto">
               <TypingAnimation />
             </div>
           )}

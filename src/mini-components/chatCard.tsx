@@ -29,7 +29,8 @@ const ChatCard = (props: Props) => {
   return (
     <button
       onClick={handleClick}
-      className={`grid grid-cols-6 gap-5 border border-slate-400 hover:border-purple-500 dark:hover:border-purple-500 hover:bg-purple-500 hover:bg-opacity-10 dark:border-white px-2 py-3 focus:ring-1 focus:ring-purple-500 focus:outline-none rounded-lg`}
+      className={`grid grid-cols-6 gap-5 items-center border border-slate-400 hover:border-purple-500 dark:hover:border-purple-500 hover:bg-purple-400 hover:bg-opacity-10 dark:border-white px-2 py-3 focus:ring-1 focus:ring-purple-500 focus:outline-none rounded-lg disabled:bg-purple-300 disabled:border-0 text-zinc-500 dark:text-white disabled:cursor-not-allowed`}
+      disabled={chat._id == currentChat?._id}
     >
       <div className="grid col-span-2 items-center justify-center">
         <span className="flex w-fit h-fit p-1 rounded-full overflow-hidden border border-slate-400 hover:border-purple-500 dark:hover:border-purple-500 dark:border-white">
@@ -37,12 +38,11 @@ const ChatCard = (props: Props) => {
         </span>
       </div>
       <div className="grid col-span-4 gap-2">
-        <span className="flex w-full text-slate-500 dark:text-white">
+        <span className="flex w-full uppercase text-xl font-semibold">
           {chatMate.userInfo.name}
         </span>
-        <span className="flex w-full text-slate-500 dark:text-white">
-          {chatMate.userInfo.email}
-        </span>
+        <span className="flex w-full">{chatMate.userInfo.email}</span>
+        <span className="flex w-full">latestMessage:</span>
       </div>
     </button>
   );

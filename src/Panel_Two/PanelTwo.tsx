@@ -44,9 +44,7 @@ const PanelTwo = () => {
           duration: 2000,
         });
         return;
-      }
-
-      addMessage(data);
+      } else addMessage(data);
     });
   }, [currentChat]);
 

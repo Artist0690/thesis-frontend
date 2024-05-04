@@ -1,21 +1,56 @@
 import React, { useEffect, useState } from "react";
 import { animated, useSpring } from "react-spring";
 import { FaWindowClose } from "react-icons/fa";
+import { searchUser_controller } from "../controllers/searchUser_controller";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import z from "zod";
+import { UserSchema } from "../zod/userSchema";
+import UserCard from "./userCard";
+import { v4 as uuid } from "uuid";
 
 type PropsType = {
   open: boolean;
-  setOpen: () => void;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
+
+type User = z.infer<typeof UserSchema>;
 
 const SideDrawer = ({ open, setOpen }: PropsType) => {
   // local state
   const [input, setinput] = useState<string>("");
+  const [users, setusers] = useState<User[] | null>(null);
 
   const disabled = input.trim().length > 0 ? false : true;
+
+  // TODO: axios private hook
+  const axiosPrivate = useAxiosPrivate();
 
   const { x } = useSpring({
     x: open ? 0 : -100,
   });
+
+  // TODO: handle search button
+  const handleSearch = async () => {
+    const keyword = input.trim();
+
+    if (keyword.length < 1) {
+      return;
+    }
+
+    // TODO: search User
+    searchUser_controller({
+      fetcher: axiosPrivate,
+      name: keyword,
+      setUsers: setusers,
+    });
+  };
+
+  // TODO: handle close button
+  const handleClose = () => {
+    setusers(null);
+    setinput("");
+    setOpen(false);
+  };
 
   return (
     <animated.div
@@ -27,6 +62,7 @@ const SideDrawer = ({ open, setOpen }: PropsType) => {
         padding: "20px",
       }}
     >
+      {/* TODO: header */}
       <div className="flex flex-col w-fit h-full bg-white dark:bg-zinc-700 shadow-lg rounded-lg">
         {/* header */}
         <div className="flex justify-between items-center gap-x-4 px-2 py-3">
@@ -43,6 +79,7 @@ const SideDrawer = ({ open, setOpen }: PropsType) => {
           <button
             className="capitalize bg-purple-400 disabled:bg-zinc-300 dark:disabled:bg-zinc-600 disabled:border-zinc-300 dark:disabled:border-zinc-600 disabled:cursor-not-allowed hover:bg-opacity-30 border border-purple-400 text-black dark:text-white rounded-lg px-2 py-3"
             disabled={disabled}
+            onClick={handleSearch}
           >
             search
           </button>
@@ -50,12 +87,19 @@ const SideDrawer = ({ open, setOpen }: PropsType) => {
           <span>
             <FaWindowClose
               className="size-8 text-red-700 hover:text-red-500"
-              onClick={() => setOpen()}
+              onClick={() => handleClose()}
             />
           </span>
         </div>
         {/* body */}
-        <div>no users</div>
+        {/* TODO: Body */}
+        <div className="flex h-fit p-2">
+          {users == null ||
+            (users?.length == 0 && (
+              <span className="capitalize">no users</span>
+            ))}
+          {users && users.map((user) => <UserCard key={uuid()} user={user} />)}
+        </div>
       </div>
     </animated.div>
   );

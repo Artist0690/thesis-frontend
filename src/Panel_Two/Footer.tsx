@@ -8,6 +8,7 @@ import { Socket } from "socket.io-client";
 import useStartSocket from "../hooks/useStartSocket";
 import { userInfo_store } from "../store/userInfo_store";
 import { toast } from "sonner";
+import { encrypt_msg } from "../crypto/AES/aes_crypto";
 
 type Props = {
   socket: Socket;
@@ -21,7 +22,7 @@ const Footer = (props: Props) => {
 
   // store
   const { _id: currentUserId } = userInfo_store();
-  const { currentChat, updateLatestMsg } = currentChat_store();
+  const { currentChat, updateLatestMsg, passphrase } = currentChat_store();
   const { addMessage } = messageLists_store();
 
   // hook for socket
@@ -48,10 +49,13 @@ const Footer = (props: Props) => {
   const sendMessage = async () => {
     const validInput = input.trim().length > 0;
     if (validInput) {
+      // TODO: encyrpt message before sent
+      const cipher = encrypt_msg({ passphrase: passphrase!, plaintext: input });
       // TODO: send message
       sendMessage_controller({
         chatId: currentChat?._id as string,
-        content: input,
+        passphrase: passphrase!,
+        content: cipher,
         addMessage: addMessage,
         updateLatestMsg: updateLatestMsg,
         fetcher,

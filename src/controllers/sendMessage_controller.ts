@@ -3,6 +3,7 @@ import { toast } from "sonner";
 import { MessageSchema } from "../zod/chatSchema";
 import { AxiosInstance } from "axios";
 import { Socket } from "socket.io-client";
+import { decrypt_cipher } from "../crypto/AES/aes_crypto";
 
 type Message = z.infer<typeof MessageSchema>;
 
@@ -10,6 +11,7 @@ type Props = {
   chatId: string;
   content: string;
   receiver: string;
+  passphrase: string;
   addMessage: (payload: Message) => void;
   updateLatestMsg: (payload: { chatId: string; msgId: string }) => void;
   fetcher: AxiosInstance;
@@ -21,6 +23,7 @@ export const sendMessage_controller = async (props: Props) => {
     updateLatestMsg,
     addMessage,
     chatId,
+    passphrase,
     content,
     fetcher,
     socket,
@@ -36,17 +39,21 @@ export const sendMessage_controller = async (props: Props) => {
         console.log("Message Type Mismatch!", checkMessage.error);
         return;
       }
-      const { _id: newMsgId, chat } = checkMessage.data;
+      const newMessage = checkMessage.data;
 
       // TODO: update latestMessage of current chat & chat lists
 
       console.log("Trying to update latest message id");
-      updateLatestMsg({ chatId: chat, msgId: newMsgId });
+      updateLatestMsg({ chatId: newMessage.chat, msgId: newMessage._id });
 
       // TODO: add new message to local state
 
+      const decipher = decrypt_cipher({
+        cipher: newMessage.content,
+        passphrase,
+      });
       console.log("Trying to update msg lists: ");
-      addMessage(checkMessage.data);
+      addMessage({ ...newMessage, content: decipher });
       // TODO: emit socket event
 
       socket.emit("chat", { ...checkMessage.data, receiver });

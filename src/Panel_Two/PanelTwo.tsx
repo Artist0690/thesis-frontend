@@ -9,15 +9,23 @@ import { toast } from "sonner";
 import z from "zod";
 import { MessageSchema } from "../zod/chatSchema";
 import { messageLists_store } from "../store/messageLists_store";
+import { chats_store } from "../store/chats_store";
+import { fetchAllChats_controller } from "../controllers/fetchAllChats_controller";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import { decrypt_cipher } from "../crypto/AES/aes_crypto";
 
 const URL = "http://localhost:5000";
 const socket = io(URL);
 
 const PanelTwo = () => {
   // store
-  const { currentChat } = currentChat_store();
+  const { currentChat, passphrase } = currentChat_store();
   const { _id: currentUserId } = userInfo_store();
   const { addMessage } = messageLists_store();
+  const { chats, setAllChats } = chats_store();
+
+  // axios private hook
+  const axiosPrivate = useAxiosPrivate();
 
   // type
   type Message = z.infer<typeof MessageSchema>;
@@ -34,19 +42,39 @@ const PanelTwo = () => {
   }, [currentUserId]);
 
   useEffect(() => {
-    // TODO: Listen chat event
+    // Listen chat event
     socket.on("receive_msg", (data: Message) => {
       console.log("receive_msg event:", data);
 
+      // if received message is brand new chat
+      const isChat = chats.filter((chat) => chat._id == data.chat);
+      if (isChat) {
+        // synchronize frontend chat lists with backend
+        fetchAllChats_controller({
+          fetcher: axiosPrivate,
+          setChatLists: setAllChats,
+        });
+      }
+      // TODO: if received message is not associated with current chat
       if (!currentChat || data.chat !== currentChat._id) {
         toast.success(`Someone sent you a message.`, {
           position: "top-right",
           duration: 2000,
         });
         return;
-      } else addMessage(data);
+      } else {
+        // TODO: decrypt received message and add to message lists
+        if (passphrase) {
+          const decipher = decrypt_cipher({
+            cipher: data.content,
+            passphrase,
+          });
+          const payload: Message = { ...data, content: decipher };
+          addMessage(payload);
+        }
+      }
     });
-  }, [currentChat]);
+  }, [currentChat, passphrase]);
 
   return (
     <div className="flex flex-col h-full overflow-hidden">

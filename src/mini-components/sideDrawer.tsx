@@ -77,7 +77,7 @@ const SideDrawer = ({ open, setOpen }: PropsType) => {
           </div>
           {/* search button */}
           <button
-            className="capitalize bg-purple-400 disabled:bg-zinc-300 dark:disabled:bg-zinc-600 disabled:border-zinc-300 dark:disabled:border-zinc-600 disabled:cursor-not-allowed hover:bg-opacity-30 border border-purple-400 text-black dark:text-white rounded-lg px-2 py-3"
+            className="capitalize bg-purple-400 disabled:bg-zinc-300 dark:disabled:bg-zinc-600 disabled:border-zinc-300 dark:disabled:border-zinc-600 disabled:cursor-not-allowed hover:bg-opacity-30 border focus:border-purple-400 focus:ring-1 text-black dark:text-white rounded-lg px-2 py-3 outline-none"
             disabled={disabled}
             onClick={handleSearch}
           >
@@ -93,7 +93,7 @@ const SideDrawer = ({ open, setOpen }: PropsType) => {
         </div>
         {/* body */}
         {/* TODO: Body */}
-        <div className="flex h-fit p-2">
+        <div className="flex h-fit p-2 flex-col gap-y-3">
           {users == null ||
             (users?.length == 0 && (
               <span className="capitalize">no users</span>

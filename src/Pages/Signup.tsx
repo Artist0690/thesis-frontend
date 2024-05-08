@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useNavigate } from "react-router-dom";
 import { signup_controller } from "../controllers/signup_controller";
 import { AxiosError } from "axios";
-import KeyGeneration from "../crypto/KeyGeneration";
+import KeyGeneration from "../crypto/RSA/KeyGeneration";
 import { signupResponseSchema } from "../zod/signupResponse";
 import { dexie_db } from "../dexie_db/db";
 

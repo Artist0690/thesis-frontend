@@ -43,8 +43,12 @@ const MessageContainer = () => {
         <p>Loading</p>
       ) : (
         <ScrollableFeed className="flex flex-col gap-y-2 pt-2 px-2 min-h-[490px] max-h-[490px]">
-          {messageLists.map((message) => (
-            <ChatBubble key={uuid()} message={message} />
+          {messageLists.map((message, index) => (
+            <ChatBubble
+              key={uuid()}
+              message={message}
+              currentMessageIndex={index}
+            />
           ))}
           {/* TODO: play typing animation */}
           {isTyping && (

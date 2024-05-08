@@ -20,7 +20,10 @@ export const searchUser_controller = async (params: Params) => {
     .then((response) => {
       const users = z.array(UserSchema).safeParse(response.data);
       if (!users.success) {
-        toast.info("Type Mismatch", { duration: 3000, position: "top-right" });
+        toast.info("User type Mismatch", {
+          duration: 3000,
+          position: "top-right",
+        });
         console.log(users.error);
         return;
       }

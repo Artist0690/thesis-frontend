@@ -29,7 +29,7 @@ const ChatCard = (props: Props) => {
   return (
     <button
       onClick={handleClick}
-      className={`grid grid-cols-6 gap-5 items-center border border-slate-400 hover:border-purple-500 dark:hover:border-purple-500 hover:bg-purple-400 hover:bg-opacity-10 dark:border-white px-2 py-3 focus:ring-1 focus:ring-purple-500 focus:outline-none rounded-lg disabled:bg-purple-300 disabled:border-0 text-zinc-500 dark:text-white disabled:cursor-not-allowed`}
+      className={`relative grid grid-cols-6 gap-5 items-center border border-slate-400 hover:border-purple-500 dark:hover:border-purple-500 hover:bg-purple-400 hover:bg-opacity-10 dark:border-white px-2 py-3 focus:ring-1 focus:ring-purple-500 focus:outline-none rounded-lg disabled:bg-purple-300 disabled:border-0 text-zinc-500 dark:text-white disabled:cursor-not-allowed`}
       disabled={chat._id == currentChat?._id}
     >
       <div className="grid col-span-2 items-center justify-center">

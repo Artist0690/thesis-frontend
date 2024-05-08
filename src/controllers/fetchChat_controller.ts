@@ -20,13 +20,18 @@ export const fetchChat_controller = async (params: Params) => {
 
     const chat = ChatSchema.safeParse(response.data);
     if (!chat.success) {
-      toast.error("chat type mismatch", {
+      toast.error("chat type mismatch from fetchChat_controller", {
         position: "top-right",
         duration: 3000,
       });
+      console.warn("Chat Type Mismatch from fetchChat_controller", chat.error);
+      console.warn(response.data);
       return;
     }
-    setCurrentChat(chat.data);
+    const singleChat = chat.data;
+
+    addToChatLists(singleChat);
+    setCurrentChat(singleChat);
   } catch (error) {
     console.log(error);
   }

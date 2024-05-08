@@ -2,16 +2,26 @@ import z from "zod";
 import { create, useStore } from "zustand";
 import { ChatSchema } from "../zod/chatSchema";
 import { produce } from "immer";
+import { PassphraseSchema } from "../zod/passphrase";
+import { decrypt_RSA_cipher } from "../crypto/RSA/rsa_crypto";
+import { toast } from "sonner";
 
 type ChatSchema = z.infer<typeof ChatSchema>;
 
+type Passphrase = z.infer<typeof PassphraseSchema>;
+
 type Chat = {
   currentChat: ChatSchema | null;
+  passphrase: Passphrase;
 };
 
 type Methods = {
   setCurrentChat: (payload: ChatSchema) => void;
   updateLatestMsg: (payload: { chatId: string; msgId: string }) => void;
+  setPassphrase: (payload: {
+    privateKey: string;
+    currentUserId: string;
+  }) => void;
 };
 
 type Store = Chat & Methods;
@@ -21,6 +31,34 @@ export const currentChat_store = create<Store>((set) => ({
   setCurrentChat: (payload) => {
     set((state) => ({ currentChat: payload }));
   },
+
+  passphrase: null,
+
+  setPassphrase(payload) {
+    const { privateKey, currentUserId } = payload;
+    set(
+      produce((draft: Store) => {
+        // FIXME: encrypt passphrase and set passphrase
+
+        if (draft.currentChat) {
+          // retrieve associated passphrase
+          const userInfoArr = draft.currentChat.users;
+          // filter current user
+          const currentUser = userInfoArr.filter(
+            (user) => user.userInfo._id == currentUserId
+          )[0];
+          const encrypted_passphrase = currentUser.passphrase;
+          const passphrase = decrypt_RSA_cipher(
+            encrypted_passphrase,
+            privateKey
+          );
+          draft.passphrase = passphrase;
+          console.warn("passphrase", draft.passphrase);
+        }
+      })
+    );
+  },
+
   updateLatestMsg: (payload) => {
     const { chatId, msgId } = payload;
     const currentChat: Chat | null = null;

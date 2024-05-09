@@ -47,6 +47,7 @@ export const sendMessage_controller = async (props: Props) => {
       updateLatestMsg({ chatId: newMessage.chat, msgId: newMessage._id });
 
       // TODO: add new message to local state
+      // encrypt message content before being sent to server
 
       const decipher = decrypt_cipher({
         cipher: newMessage.content,
@@ -58,10 +59,10 @@ export const sendMessage_controller = async (props: Props) => {
 
       socket.emit("chat", { ...checkMessage.data, receiver });
 
-      // TODO: listen test event
-      socket.on("test", (data: string) => {
-        toast.success(data, { position: "top-right", duration: 2000 });
-      });
+      // // TODO: listen test event
+      // socket.on("test", (data: string) => {
+      //   toast.success(data, { position: "top-right", duration: 2000 });
+      // });
     })
     .catch((err) => {
       toast.error("Failed to send message!");

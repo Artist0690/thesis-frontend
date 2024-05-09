@@ -1,5 +1,5 @@
 import React from "react";
-import z, { string } from "zod";
+import z from "zod";
 import { MessageSchema } from "../zod/chatSchema";
 import { userInfo_store } from "../store/userInfo_store";
 import ironman from "../assets/icons8-iron-man.svg";
@@ -69,7 +69,7 @@ const ChatBubble = (props: Props) => {
       <div className="min-w-[30px] flex justify-start items-end">
         {isIcon && <img src={icon} className="flex w-6" />}
       </div>
-      <div className="flex flex-col">
+      <div className="flex flex-col max-w-[300px]">
         <span
           className={`w-fit ${scheme.bgColor} ${scheme.txColor} rounded-2xl px-3 py-2 font-[poppins]`}
         >

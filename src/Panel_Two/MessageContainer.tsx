@@ -12,20 +12,18 @@ import { socket_store } from "../store/socket_store";
 const MessageContainer = () => {
   // store
   const { currentChat } = currentChat_store();
-
-  // store
   const { messageLists } = messageLists_store();
   const { isTyping } = socket_store();
 
   // use a hook that fetches messages assciated with chat
   const { msgLists } = useFetchAllMessages();
 
-  useEffect(() => {
-    if (msgLists) console.log("msg lists from hook: ", msgLists);
-    if (messageLists) console.log("msg lists from store: ", messageLists);
-    if (currentChat && currentChat.latestMessage)
-      console.log("latest msg ID: ", currentChat.latestMessage._id);
-  }, [msgLists, messageLists]);
+  // useEffect(() => {
+  //   if (msgLists) console.log("msg lists from hook: ", msgLists);
+  //   if (messageLists) console.log("msg lists from store: ", messageLists);
+  //   if (currentChat && currentChat.latestMessage)
+  //     console.log("latest msg ID: ", currentChat.latestMessage._id);
+  // }, [msgLists, messageLists]);
 
   if (!currentChat)
     return (

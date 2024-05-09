@@ -30,6 +30,7 @@ const PanelTwo = () => {
   // type
   type Message = z.infer<typeof MessageSchema>;
 
+  // hook for socket event
   useEffect(() => {
     if (currentUserId) {
       // TODO: Join setup event
@@ -41,19 +42,21 @@ const PanelTwo = () => {
     }
   }, [currentUserId]);
 
+  // hook for events that listen messages
   useEffect(() => {
     // Listen chat event
     socket.on("receive_msg", (data: Message) => {
       console.log("receive_msg event:", data);
 
       // if received message is brand new chat
-      const isChat = chats.filter((chat) => chat._id == data.chat);
-      if (isChat) {
+      const isChat = chats.filter((chat) => chat._id == data.chat)[0];
+      if (!isChat) {
         // synchronize frontend chat lists with backend
         fetchAllChats_controller({
           fetcher: axiosPrivate,
           setChatLists: setAllChats,
         });
+        return;
       }
       // TODO: if received message is not associated with current chat
       if (!currentChat || data.chat !== currentChat._id) {

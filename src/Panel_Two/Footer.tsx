@@ -47,6 +47,7 @@ const Footer = (props: Props) => {
   const fetcher = useAxiosPrivate();
 
   const sendMessage = async () => {
+    // check input values to ensure that are not to space characters
     const validInput = input.trim().length > 0;
     if (validInput) {
       // TODO: encyrpt message before sent

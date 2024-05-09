@@ -14,6 +14,7 @@ const useFetchAllMessages = () => {
   const { currentChat, passphrase } = currentChat_store();
 
   // local state
+  // this state value is returned
   const [msgLists, setmsgLists] = useState<Message[] | null>(null);
 
   // fetcher function

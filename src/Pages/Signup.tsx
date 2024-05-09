@@ -40,6 +40,7 @@ const Signup_Page = () => {
 
   type FormType = z.infer<typeof FormSchema>;
 
+  //  react hook form hook
   const {
     register,
     handleSubmit,
@@ -48,6 +49,7 @@ const Signup_Page = () => {
     formState: { errors, isValid },
   } = useForm<FormType>({ resolver: zodResolver(FormSchema) });
 
+  // signup handler function
   const handleSignup: SubmitHandler<FormType> = async (data) => {
     console.log(data);
 
@@ -89,6 +91,7 @@ const Signup_Page = () => {
   return (
     <div className="flex w-full h-screen bg-zinc-100 justify-center items-center">
       <div className="flex flex-col min-w-[500px] bg-white gap-y-5 shadow-lg p-10">
+        {/* header */}
         <div>
           <h1 className="text-5xl mb-4 font-[poppins] font-semibold capitalize text-zinc-600 text-center">
             signup form
@@ -158,6 +161,15 @@ const Signup_Page = () => {
               className="w-full bg-zinc-300 text-gray-600 text-lg py-2 rounded-lg font-[poppins] outline-none focus:ring-1 focus:ring-purple-400 capitalize"
             >
               signup
+            </button>
+          </div>
+          {/* login button */}
+          <div className="flex w-full">
+            <button
+              onClick={() => navigate("login")}
+              className="w-full bg-purple-400 text-zinc-100 text-lg py-2 rounded-lg font-[poppins] outline-none focus:ring-1 focus:ring-purple-400 capitalize"
+            >
+              login
             </button>
           </div>
           {/* home button */}

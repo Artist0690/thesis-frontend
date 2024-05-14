@@ -38,13 +38,13 @@ const ChatBubble = (props: Props) => {
   // chat bubble scheme
   let schemeA = {
     position: "justify-start",
-    bgColor: "bg-zinc-300",
+    bgColor: "bg-white",
     txColor: "text-black",
     iconPosition: "flex-row-reverse",
   };
   let schemeB = {
     position: "justify-start",
-    bgColor: "bg-purple-400",
+    bgColor: "bg-purple-500",
     txColor: "text-white",
     iconPosition: "",
   };
@@ -71,7 +71,7 @@ const ChatBubble = (props: Props) => {
       </div>
       <div className="flex flex-col max-w-[300px]">
         <span
-          className={`w-fit ${scheme.bgColor} ${scheme.txColor} rounded-2xl px-3 py-2 font-[poppins]`}
+          className={`w-fit ${scheme.bgColor} ${scheme.txColor} rounded-2xl px-3 py-2 font-[inter thin] font-normal shadow-sm`}
         >
           {message.content}
         </span>

@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { IoIosSearch } from "react-icons/io";
-import { IoIosHome } from "react-icons/io";
+import home from "../assets/icons8-home.svg";
 import SideDrawer from "../mini-components/sideDrawer";
 import { Link } from "react-router-dom";
+import Home_icon from "../mini-components/home_icon";
+import { motion } from "framer-motion";
 
 const Header = () => {
   const [openSideDrawer, setopenSideDrawer] = useState<boolean>(false);
@@ -13,15 +15,20 @@ const Header = () => {
 
   return (
     <div className="flex px-3 py-4 justify-between">
-      <span
+      {/* search icon */}
+      <motion.span
+        whileHover={{ scale: 1.2 }}
         onClick={() => toggleSideDrawer()}
-        className="flex flow-row w-full h-full justify-between items-center"
+        className="flex flow-row w-fit h-full justify-between items-center"
       >
-        <IoIosSearch className="w-8 h-8 text-black dark:text-white cursor-pointer" />
-        <Link to={"/"}>
-          <IoIosHome className="w-8 h-8 text-black dark:text-white cursor-pointer" />
-        </Link>
-      </span>
+        <IoIosSearch className="w-8 h-8 text-black dark:text-slate-400 cursor-pointer" />
+      </motion.span>
+      {/* home icon */}
+      <Link to={"/"}>
+        <motion.div whileHover={{ scale: 1.2 }}>
+          <Home_icon />
+        </motion.div>
+      </Link>
       {/* CUSTOM: */}
       <SideDrawer open={openSideDrawer} setOpen={toggleSideDrawer} />
     </div>

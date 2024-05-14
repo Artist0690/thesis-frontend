@@ -27,11 +27,14 @@ const Chat_landing = () => {
   // console.log("Chat Lists:", chatStore);
 
   return (
-    <div className="grid grid-cols-3 gap-3 py-3 px-10 items-center min-h-screen max-h-screen overflow-hidden text-slate-400 dark:text-white bg-white dark:bg-black">
-      <div className="grid h-full bg-zinc-200 dark:bg-zinc-800 rounded-lg shadow-lg">
+    // chat landing page
+    <div className="grid grid-cols-3 gap-3 py-3 px-10 items-center min-h-screen max-h-screen overflow-hidden text-slate-400 dark:text-white bg-zinc-300 dark:bg-black">
+      {/* panel one container */}
+      <div className="grid h-full bg-white dark:bg-gray-900 rounded-lg shadow-lg">
         <PanelOne />
       </div>
-      <div className="grid col-span-2 h-full bg-zinc-200 dark:bg-zinc-800 rounded-lg shadow-lg overflow-hidden">
+      {/* panel two container */}
+      <div className="grid col-span-2 h-full bg-white dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden">
         <PanelTwo />
       </div>
     </div>

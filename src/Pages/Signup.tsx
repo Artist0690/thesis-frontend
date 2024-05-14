@@ -89,28 +89,31 @@ const Signup_Page = () => {
   };
 
   return (
-    <div className="flex w-full h-screen bg-zinc-100 justify-center items-center">
-      <div className="flex flex-col min-w-[500px] bg-white gap-y-5 shadow-lg p-10">
+    // page
+    <div className="flex w-full h-screen bg-white justify-center items-center">
+      {/* container */}
+      <div className="flex flex-col min-w-[500px] bg-white border border-slate-200 rounded-md gap-y-5 p-10 shadow-sm">
         {/* header */}
         <div>
-          <h1 className="text-5xl mb-4 font-[poppins] font-semibold capitalize text-zinc-600 text-center">
-            signup form
+          <h1 className="font-[inter thin] font-semibold text-2xl">
+            Create an account
           </h1>
         </div>
+        {/* form */}
         <form
           onSubmit={handleSubmit(handleSignup)}
           className="flex flex-col gap-y-5"
         >
           {/* name 🧑🏻 */}
           <div className="flex flex-col gap-y-3">
-            <label htmlFor="name" className="capitalize font-[poppins] text-lg">
-              name
+            <label htmlFor="name" className=" font-[inter thin] text-lg">
+              Your name
             </label>
             <input
               id="name"
               type="name"
               {...register("name")}
-              className="text-lg py-2 pl-3 text-gray-600 rounded-lg border border-zinc-400 outline-none focus:ring-purple-400 focus:ring-1"
+              className="text-lg py-2 pl-3 text-gray-600 rounded-xl border border-slate-300 outline-none focus:ring-purple-400 focus:ring-1"
             />
             {errors.name && (
               <p className="text-red-400">{errors.name.message}</p>
@@ -118,17 +121,14 @@ const Signup_Page = () => {
           </div>
           {/* email 📜 */}
           <div className="flex flex-col gap-y-3">
-            <label
-              htmlFor="email"
-              className="capitalize font-[poppins] text-lg"
-            >
-              email
+            <label htmlFor="email" className=" font-[inter thin] text-lg">
+              Your email
             </label>
             <input
               id="email"
               type="email"
               {...register("email")}
-              className="text-lg py-2 pl-3 text-gray-600 rounded-lg border border-zinc-400 outline-none focus:ring-purple-400 focus:ring-1"
+              className="text-lg py-2 pl-3 text-gray-600 rounded-xl border border-slate-300 outline-none focus:ring-purple-400 focus:ring-1"
             />
             {errors.email && (
               <p className="text-red-400">{errors.email.message}</p>
@@ -136,17 +136,14 @@ const Signup_Page = () => {
           </div>
           {/* password ☢️ */}
           <div className="flex flex-col gap-y-3">
-            <label
-              htmlFor="password"
-              className="capitalize font-[poppins] text-lg"
-            >
-              password
+            <label htmlFor="password" className=" font-[inter thin] text-lg">
+              Password
             </label>
             <input
               id="password"
               type="password"
               {...register("password")}
-              className="text-lg py-2 pl-3 text-gray-600 rounded-lg border border-zinc-400 outline-none focus:ring-purple-400 focus:ring-1"
+              className="text-lg py-2 pl-3 text-gray-600 rounded-xl border border-slate-300 outline-none focus:ring-purple-400 focus:ring-1"
             />
             {errors.password && (
               <p className="text-red-400">{errors.password.message}</p>
@@ -158,27 +155,16 @@ const Signup_Page = () => {
           <div className="flex w-full">
             <button
               onClick={() => trigger()}
-              className="w-full bg-zinc-300 text-gray-600 text-lg py-2 rounded-lg font-[poppins] outline-none focus:ring-1 focus:ring-purple-400 capitalize"
+              className="w-full bg-blue-500 text-white text-lg py-2 rounded-lg font-[inter thin] outline-none focus:ring-1 focus:ring-purple-400"
             >
-              signup
+              Create an account
             </button>
           </div>
-          {/* login button */}
-          <div className="flex w-full">
-            <button
-              onClick={() => navigate("login")}
-              className="w-full bg-purple-400 text-zinc-100 text-lg py-2 rounded-lg font-[poppins] outline-none focus:ring-1 focus:ring-purple-400 capitalize"
-            >
-              login
-            </button>
-          </div>
-          {/* home button */}
-          <div className="flex">
-            <Link
-              to={"/"}
-              className="w-full text-center text-purple-400 bg-white text-lg py-2 rounded-lg border-2 border-zinc-300 font-[poppins] outline-none focus:ring-1 focus:ring-purple-400"
-            >
-              Home
+          {/* login link */}
+          <div className="flex w-full gap-x-2">
+            Already have an accont?
+            <Link to="/login" className="font-[inter thin] text-indigo-500">
+              Login here
             </Link>
           </div>
         </form>

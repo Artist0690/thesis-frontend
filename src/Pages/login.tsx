@@ -43,6 +43,7 @@ const Login_Page = () => {
   //store
   const { setUserInfo } = userInfo_store();
 
+  // login funciton
   const handleLogin: SubmitHandler<FormType> = async (data) => {
     console.log(data);
     login_controller(data)
@@ -74,70 +75,74 @@ const Login_Page = () => {
   };
 
   return (
+    // page
     <div className="flex w-full h-screen bg-zinc-100 justify-center items-center">
-      <div className="flex flex-col min-w-[500px] bg-white gap-y-5 shadow-lg p-10">
+      {/* container */}
+      <div className="flex flex-col min-w-[500px] bg-white gap-y-5 border border-slate-200 rounded-md p-10 shadow-sm">
+        {/* header */}
         <div>
-          <h1 className="text-5xl mb-4 font-[poppins] font-semibold capitalize text-zinc-600 text-center">
-            login form
+          <h1 className="font-[inter thin] font-semibold text-2xl">
+            Sign in to your account
           </h1>
         </div>
+        {/* form */}
         <form
           onSubmit={handleSubmit(handleLogin)}
           className="flex flex-col gap-y-5"
         >
           {/* email 📜 */}
           <div className="flex flex-col gap-y-3">
-            <label
-              htmlFor="email"
-              className="capitalize font-[poppins] text-lg"
-            >
-              email
+            <label htmlFor="email" className="font-[inter thin] text-lg">
+              Your email
             </label>
             <input
               id="email"
               type="email"
               {...register("email")}
-              className="text-lg py-2 pl-3 text-gray-600 rounded-lg border border-zinc-400 outline-none focus:ring-purple-400 focus:ring-1"
+              className="text-lg py-2 pl-3 text-gray-600 rounded-xl border border-slate-300 outline-none focus:ring-purple-400 focus:ring-1"
             />
             {errors.email && (
-              <p className="text-red-400">{errors.email.message}</p>
+              <p className="text-red-400 font-[inter thin]">
+                {errors.email.message}
+              </p>
             )}
           </div>
           {/* password ☢️ */}
           <div className="flex flex-col gap-y-3">
-            <label
-              htmlFor="password"
-              className="capitalize font-[poppins] text-lg"
-            >
-              password
+            <label htmlFor="password" className="font-[inter thin] text-lg">
+              Password
             </label>
             <input
               id="password"
               type="password"
               {...register("password")}
-              className="text-lg py-2 pl-3 text-gray-600 rounded-lg border border-zinc-400 outline-none focus:ring-purple-400 focus:ring-1"
+              className="text-lg py-2 pl-3 text-gray-600 rounded-xl border border-slate-300 outline-none focus:ring-purple-400 focus:ring-1"
             />
             {errors.password && (
-              <p className="text-red-400">{errors.password.message}</p>
+              <p className="text-red-400 font-[inter thin]">
+                {errors.password.message}
+              </p>
             )}
           </div>
           {/* error message from server 🚨 */}
-          <p className="text-red-400">{errorMessage && errorMessage}</p>
+          <p className="text-red-400 font-[inter thin]">
+            {errorMessage && errorMessage}
+          </p>
           {/* buttons🕹️ */}
           <div>
-            <div className="flex flex-row justify-between">
+            <div className="flex flex-col justify-start gap-y-3">
               <button
                 onClick={() => trigger()}
-                className="bg-zinc-300 text-gray-600 text-lg px-3 py-2 rounded-lg font-[poppins] outline-none focus:ring-1 focus:ring-purple-400"
+                className="flex bg-blue-600 text-white justify-center items-center text-lg px-3 py-2 rounded-lg font-[inter thin] outline-none focus:ring-1 focus:ring-purple-400"
               >
-                Login
+                Sign in
               </button>
-              <Link
-                to={"/"}
-                className="text-purple-400 bg-white text-lg px-3 py-2 rounded-lg border-2 border-zinc-300 font-[poppins] outline-none focus:ring-1 focus:ring-purple-400"
-              >
-                Home
-              </Link>
+              <span className="flex gap-x-3">
+                Don't you have an account?
+                <Link to={"/signup"} className="text-blue-500">
+                  Sign up
+                </Link>
+              </span>
             </div>
           </div>
         </form>

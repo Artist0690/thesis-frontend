@@ -16,7 +16,7 @@ const ChatListTemplate = (props: Props) => {
   if (chatLists == null || chatLists.length < 1) return <div>No chats yet</div>;
 
   return (
-    <div className="flex flex-col h-auto py-4 px-3 gap-y-3">
+    <div className="flex flex-col max-h-[600px] py-4 px-3 divide-y divide-zinc-200 dark:divide-zinc-600">
       {chatLists.map((chat) => (
         <ChatCard key={v4()} chat={chat} />
       ))}

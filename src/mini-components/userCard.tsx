@@ -1,12 +1,13 @@
-import React from "react";
 import avatar from "../assets/icons8-iron-man.svg";
 import z from "zod";
 import { UserSchema } from "../zod/userSchema";
-import { toast } from "sonner";
 import { currentChat_store } from "../store/currentChat_store";
 import { fetchChat_controller } from "../controllers/fetchChat_controller";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { chats_store } from "../store/chats_store";
+import { userInfo_store } from "../store/userInfo_store";
+import envelope from "../assets/arrow-thin-right-icon.svg";
+import { motion } from "framer-motion";
 
 type User = z.infer<typeof UserSchema>;
 
@@ -18,8 +19,9 @@ const UserCard = (props: Props) => {
   const { user } = props;
 
   // store
-  const { setCurrentChat } = currentChat_store();
+  const { setCurrentChat, setPassphrase } = currentChat_store();
   const { updateChat } = chats_store();
+  const { _id: currentUserId, rsa_private_key } = userInfo_store();
 
   // hook for axios private
   const axiosPrivate = useAxiosPrivate();
@@ -33,25 +35,50 @@ const UserCard = (props: Props) => {
       addToChatLists: updateChat,
       setCurrentChat: setCurrentChat,
     });
+
+    // TODO: decrypt passphrase
+    setPassphrase({
+      currentUserId: currentUserId!,
+      privateKey: rsa_private_key!,
+    });
   };
 
   return (
-    <button
-      className="w-full h-fit flex flex-row items-center gap-x-5 rounded-lg p-2 border border-zinc-400 dark:border-white outline-none ring-0 focus:ring-1 focus:ring-purple-400 hover:bg-purple-400 hover:bg-opacity-25 hover:border-purple-400 dark:hover:border-purple-400"
-      onClick={handleClick}
+    <motion.div
+      initial={{ x: -10, opacity: 0 }}
+      animate={{ x: 0, opacity: 1, transition: { delay: 0.2, when: "once" } }}
+      className="grid grid-cols-12 w-full min-h-[50px] px-1 py-3 font-[inter light]"
     >
-      <div>
+      {/* avatar */}
+      <div className="grid col-span-3">
         <img src={avatar} className="w-12" />
       </div>
-      <div className="flex flex-col">
-        <span className="block text-zinc-600 dark:text-white text-start">
+      {/* name & email */}
+      <div className="grid col-span-7">
+        <span className="block text-black font-semibold dark:text-white text-start capitalize">
           {user.name}
         </span>
         <span className="text-zinc-600 dark:text-white text-start">
           {user.email}
         </span>
       </div>
-    </button>
+      {/* envelope */}
+      <div className="grid col-span-2 items-center justify-center">
+        <motion.div
+          className="w-8 h-8 flex justify-center items-center rounded-full border border-slate-300"
+          whileHover={{
+            scale: 1.2,
+            transition: {
+              type: "spring",
+              stiffness: 260,
+              damping: 20,
+            },
+          }}
+        >
+          <img src={envelope} onClick={handleClick} className="w-4" />
+        </motion.div>
+      </div>
+    </motion.div>
   );
 };
 

@@ -3,6 +3,19 @@ import { ChatSchema } from "../zod/chatSchema";
 import ironMan from "../assets/icons8-iron-man.svg";
 import { userInfo_store } from "../store/userInfo_store";
 import { currentChat_store } from "../store/currentChat_store";
+import { motion } from "framer-motion";
+import right_arrow from "../assets/arrow-thin-right-icon.svg";
+import { once } from "events";
+
+const variants = {
+  initial: {
+    x: "-100%",
+  },
+  hover: {
+    x: 0,
+    transition: { type: "tween", duration: 0.3 },
+  },
+};
 
 type Chat = z.infer<typeof ChatSchema>;
 
@@ -27,24 +40,47 @@ const ChatCard = (props: Props) => {
   };
 
   return (
-    <button
+    <motion.button
+      initial={{ x: -10, opacity: 0 }}
+      animate={{ x: 0, opacity: 1, transition: { delay: 0.2, when: "once" } }}
       onClick={handleClick}
-      className={`relative grid grid-cols-6 gap-5 items-center border border-slate-400 hover:border-purple-500 dark:hover:border-purple-500 hover:bg-purple-400 hover:bg-opacity-10 dark:border-white px-2 py-3 focus:ring-1 focus:ring-purple-500 focus:outline-none rounded-lg disabled:bg-purple-300 disabled:border-0 text-zinc-500 dark:text-white disabled:cursor-not-allowed`}
       disabled={chat._id == currentChat?._id}
+      className={`relative py-2 grid grid-cols-12 items-center focus:ring-1 focus:ring-purple-500 focus:outline-none disabled:bg-zinc-200 dark:disabled:bg-zinc-700 text-zinc-500 dark:text-white disabled:cursor-not-allowed`}
     >
-      <div className="grid col-span-2 items-center justify-center">
+      {/* avatar */}
+      <div className="h-full grid col-span-3 items-center justify-center">
         <span className="flex w-fit h-fit p-1 rounded-full overflow-hidden border border-slate-400 hover:border-purple-500 dark:hover:border-purple-500 dark:border-white">
-          <img src={ironMan} className="w-16 h-16" />
+          <img src={ironMan} className="w-12 h-12" />
         </span>
       </div>
-      <div className="grid col-span-4 gap-2">
-        <span className="flex w-full uppercase text-xl font-semibold">
+      {/* name & email & latest message */}
+      <div className="h-full grid col-span-7 gap-1 font-[inter thin]">
+        <span className="flex w-full capitalize font-semibold text-black dark:text-white">
           {chatMate.userInfo.name}
         </span>
         <span className="flex w-full">{chatMate.userInfo.email}</span>
         <span className="flex w-full">latestMessage:</span>
       </div>
-    </button>
+      {/* arrow */}
+      <div className="h-full grid col-span-2 items-center justify-center">
+        <motion.span
+          initial="initial"
+          animate="initial"
+          whileHover="hover"
+          className="flex relative w-10 h-10 p-3 rounded-full border z-10 overflow-hidden border-slate-300"
+        >
+          {/* absolute child */}
+          {currentChat?._id !== chat._id && (
+            <motion.div
+              className="absolute w-full h-full bg-purple-400 rounded-full top-0 left-0"
+              key={"child"}
+              variants={variants}
+            ></motion.div>
+          )}
+          <img src={right_arrow} className="w-5 z-20" />
+        </motion.span>
+      </div>
+    </motion.button>
   );
 };
 

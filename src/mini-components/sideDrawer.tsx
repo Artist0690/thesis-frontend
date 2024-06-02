@@ -8,6 +8,7 @@ import { UserSchema } from "../zod/userSchema";
 import UserCard from "./userCard";
 import { v4 as uuid } from "uuid";
 import { motion } from "framer-motion";
+import Input from "../components/ui/Input";
 
 type PropsType = {
   open: boolean;
@@ -53,12 +54,6 @@ const SideDrawer = ({ open, setOpen }: PropsType) => {
     setOpen(false);
   };
 
-  // handle change
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    setinput(e.target.value);
-  };
-
   return (
     <animated.div
       style={{
@@ -78,11 +73,10 @@ const SideDrawer = ({ open, setOpen }: PropsType) => {
           <div className="flex flex-row w-fit h-10 gap-x-3 justify-between items-center">
             {/* input */}
             <div className="h-full">
-              <input
+              <Input
                 value={input}
-                onChange={(e) => handleChange(e)}
+                onChange={(e) => setinput(e.target.value)}
                 type="text"
-                className="h-full px-2 rounded-md bg-zinc-200 dark:bg-zinc-600 focus:ring-1 ring-offset-1 focus:outline-none focus:ring-purple-500 border border-zinc-300 dark:border-zinc-400 caret-purple-500 text-zinc-600 dark:text-white outline-none font-[inter thin]"
                 placeholder="Search"
               />
             </div>
@@ -123,7 +117,10 @@ const SideDrawer = ({ open, setOpen }: PropsType) => {
                 no users
               </motion.span>
             ))}
-          {users && users.map((user) => <UserCard key={uuid()} user={user} />)}
+          {users &&
+            users.map((user, index) => (
+              <UserCard key={uuid()} index={index} user={user} />
+            ))}
         </div>
       </div>
     </animated.div>

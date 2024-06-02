@@ -8,15 +8,17 @@ import { chats_store } from "../store/chats_store";
 import { userInfo_store } from "../store/userInfo_store";
 import envelope from "../assets/arrow-thin-right-icon.svg";
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 
 type User = z.infer<typeof UserSchema>;
 
 type Props = {
   user: User;
+  index: number;
 };
 
 const UserCard = (props: Props) => {
-  const { user } = props;
+  const { user, index } = props;
 
   // store
   const { setCurrentChat, setPassphrase } = currentChat_store();
@@ -43,10 +45,14 @@ const UserCard = (props: Props) => {
     });
   };
 
+  useEffect(() => {
+    console.log("user card re-rendered");
+  }, []);
+
   return (
     <motion.div
       initial={{ x: -10, opacity: 0 }}
-      animate={{ x: 0, opacity: 1, transition: { delay: 0.2, when: "once" } }}
+      animate={{ x: 0, opacity: 1, transition: { duration: index * 0.3 } }}
       className="grid grid-cols-12 w-full min-h-[50px] px-1 py-3 font-[inter light]"
     >
       {/* avatar */}

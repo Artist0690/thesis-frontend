@@ -6,6 +6,7 @@ import { currentChat_store } from "../store/currentChat_store";
 import { motion } from "framer-motion";
 import right_arrow from "../assets/arrow-thin-right-icon.svg";
 import { once } from "events";
+import { useEffect } from "react";
 
 const variants = {
   initial: {
@@ -21,10 +22,11 @@ type Chat = z.infer<typeof ChatSchema>;
 
 type Props = {
   chat: Chat;
+  index: number;
 };
 
 const ChatCard = (props: Props) => {
-  const { chat } = props;
+  const { chat, index } = props;
 
   // store
   const { _id: currentUserId } = userInfo_store();
@@ -39,10 +41,18 @@ const ChatCard = (props: Props) => {
     // console.log("current chat is:", currentChat);
   };
 
+  useEffect(() => {
+    console.log("chat card re-rendered");
+  }, []);
+
   return (
     <motion.button
-      initial={{ x: -10, opacity: 0 }}
-      animate={{ x: 0, opacity: 1, transition: { delay: 0.2, when: "once" } }}
+      initial={{ x: -100, opacity: 0 }}
+      animate={{
+        x: 0,
+        opacity: 1,
+        transition: { duration: 0.3 * index, when: "once" },
+      }}
       onClick={handleClick}
       disabled={chat._id == currentChat?._id}
       className={`relative py-2 grid grid-cols-12 items-center focus:ring-1 focus:ring-purple-500 focus:outline-none disabled:bg-zinc-200 dark:disabled:bg-zinc-700 text-zinc-500 dark:text-white disabled:cursor-not-allowed`}

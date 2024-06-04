@@ -1,12 +1,11 @@
 import z from "zod";
 import { ChatSchema } from "../zod/chatSchema";
-import ironMan from "../assets/icons8-iron-man.svg";
 import { userInfo_store } from "../store/userInfo_store";
 import { currentChat_store } from "../store/currentChat_store";
 import { motion } from "framer-motion";
-import right_arrow from "../assets/arrow-thin-right-icon.svg";
-import { once } from "events";
 import { useEffect } from "react";
+import { ArrowRight } from "lucide-react";
+import Avatar from "../components/ui/avatar";
 
 const variants = {
   initial: {
@@ -59,9 +58,7 @@ const ChatCard = (props: Props) => {
     >
       {/* avatar */}
       <div className="h-full grid col-span-3 items-center justify-center">
-        <span className="flex w-fit h-fit p-1 rounded-full overflow-hidden border border-slate-400 hover:border-purple-500 dark:hover:border-purple-500 dark:border-white">
-          <img src={ironMan} className="w-12 h-12" />
-        </span>
+        <Avatar>{chatMate.userInfo.name.charAt(0)}</Avatar>
       </div>
       {/* name & email & latest message */}
       <div className="h-full grid col-span-7 gap-1 font-[inter thin]">
@@ -77,7 +74,7 @@ const ChatCard = (props: Props) => {
           initial="initial"
           animate="initial"
           whileHover="hover"
-          className="flex relative w-10 h-10 p-3 rounded-full border z-10 overflow-hidden border-slate-300"
+          className="flex justify-center items-center relative w-10 h-10 p-3 rounded-full border z-10 overflow-hidden border-slate-300"
         >
           {/* absolute child */}
           {currentChat?._id !== chat._id && (
@@ -87,7 +84,7 @@ const ChatCard = (props: Props) => {
               variants={variants}
             ></motion.div>
           )}
-          <img src={right_arrow} className="w-5 z-20" />
+          <ArrowRight className="w-12 z-20" />
         </motion.span>
       </div>
     </motion.button>

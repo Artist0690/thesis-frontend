@@ -28,14 +28,16 @@ const Chat_landing = () => {
 
   return (
     // chat landing page
-    <div className="grid grid-cols-3 gap-3 py-3 px-10 items-center min-h-screen max-h-screen overflow-hidden text-slate-400 dark:text-white bg-zinc-300 dark:bg-black">
-      {/* panel one container */}
-      <div className="grid h-full bg-white dark:bg-gray-900 rounded-lg shadow-lg">
-        <PanelOne />
-      </div>
-      {/* panel two container */}
-      <div className="grid col-span-2 h-full bg-white dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden">
-        <PanelTwo />
+    <div className="grid grid-cols-4 gap-2 py-5 px-10 items-center min-h-screen max-h-screen overflow-hidden text-slate-400 dark:text-white bg-zinc-300 dark:bg-black">
+      <div className="grid grid-cols-4 col-span-full rounded-2xl bg-white dark:bg-slate-900 overflow-hidden divide-x divide-zinc-300 dark:divide-zinc-700">
+        {/* panel one container */}
+        <div className="grid h-full bg-white dark:bg-gray-900">
+          <PanelOne />
+        </div>
+        {/* panel two container */}
+        <div className="grid col-span-3 h-full bg-white dark:bg-gray-900 overflow-hidden">
+          <PanelTwo />
+        </div>
       </div>
     </div>
   );

@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { login_controller } from "../controllers/login_controller";
 import { AxiosError } from "axios";
 import { userInfo_store } from "../store/userInfo_store";
+import Input from "../components/ui/Input";
 
 const Login_Page = () => {
   const errorMessageSchema = z.object({
@@ -101,6 +102,7 @@ const Login_Page = () => {
               {...register("email")}
               className="text-lg py-2 pl-3 text-gray-600 rounded-xl border border-slate-300 outline-none focus:ring-purple-400 focus:ring-1"
             />
+
             {errors.email && (
               <p className="text-red-400 font-[inter thin]">
                 {errors.email.message}

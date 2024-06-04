@@ -7,6 +7,7 @@ import hulk from "../assets/icons8-hulk.svg";
 import { messageLists_store } from "../store/messageLists_store";
 import { getChatMateInfo } from "../functions/getChatMateId";
 import { chats_store } from "../store/chats_store";
+import Avatar from "../components/ui/avatar";
 
 type Message = z.infer<typeof MessageSchema>;
 
@@ -20,7 +21,7 @@ const ChatBubble = (props: Props) => {
   const { message, currentMessageIndex } = props;
 
   // store
-  const { _id: currentUserId } = userInfo_store();
+  const { _id: currentUserId, name: currentUserName } = userInfo_store();
   const { messageLists } = messageLists_store();
   const { chats } = chats_store();
   const chatMateInfo = getChatMateInfo({
@@ -62,21 +63,30 @@ const ChatBubble = (props: Props) => {
       ? false
       : true;
 
-  const icon = message.sender._id == currentUserId ? hulk : ironman;
+  const avatarName =
+    message.sender._id == currentUserId
+      ? currentUserName
+      : chatMateInfo.userInfo.name;
 
   return (
     <div className={`flex w-full ${scheme.position} ${scheme.iconPosition}`}>
-      <div className="min-w-[30px] flex justify-start items-end">
-        {isIcon && <img src={icon} className="flex w-6" />}
+      {/* avatar */}
+      <div className="min-w-[30px] flex justify-start items-end border border-red-500">
+        {isIcon && (
+          <Avatar className="w-6 h-6 bg-zinc-300">
+            {avatarName?.charAt(0)}
+          </Avatar>
+        )}
       </div>
-      <div className="flex flex-col max-w-[300px]">
+      {/* content & seen indicator */}
+      <div className="flex flex-col max-w-[300px] border border-blue-500">
         <span
-          className={`w-fit ${scheme.bgColor} ${scheme.txColor} rounded-2xl px-3 py-2 font-[inter thin] font-normal shadow-sm`}
+          className={`w-fit ${scheme.bgColor} ${scheme.txColor} rounded-2xl px-3 py-2 font-[Inter] font-normal shadow-sm`}
         >
           {message.content}
         </span>
         <span className="flex justify-start text-zinc-400 dark:text-white">
-          {message.sender._id == currentUserId && seenIndicator}
+          {/* {message.sender._id == currentUserId && seenIndicator} */}
         </span>
       </div>
     </div>

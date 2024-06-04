@@ -81,7 +81,8 @@ const Footer = (props: Props) => {
           onChange={(e) => handleInput(e)}
           onFocus={(e) => handleTyping(e)}
           onBlur={handleStopTyping}
-          className="px-2 py-3 min-w-[400px] rounded-lg outline-none bg-white dark:bg-zinc-600 text-zinc-600 dark:text-white border border-zinc-300 dark:border-zinc-500"
+          placeholder="Type..."
+          className="px-2 py-3 min-w-[400px] font-[Inter] text-lg placeholder:italic rounded-2xl outline-none focus:ring-[1px] focus:ring-violet-500 ring-offset-1 bg-white dark:bg-zinc-600 text-zinc-600 dark:text-white border border-zinc-300 dark:border-zinc-500"
         />
       </div>
       <div>

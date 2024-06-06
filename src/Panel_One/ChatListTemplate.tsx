@@ -5,15 +5,17 @@ import ChatCard from "../mini-components/chatCard";
 import { v4 } from "uuid";
 import ScrollableFeed from "react-scrollable-feed";
 import { motion } from "framer-motion";
+import { cn } from "@udecode/cn";
 
 type Chat = z.infer<typeof ChatSchema>;
 
 type Props = {
   chatLists: Chat[];
+  className?: string;
 };
 
 const ChatListTemplate = (props: Props) => {
-  const { chatLists } = props;
+  const { chatLists, className } = props;
 
   useEffect(() => {
     console.log("chat list template re-render");
@@ -31,7 +33,12 @@ const ChatListTemplate = (props: Props) => {
     );
 
   return (
-    <ScrollableFeed className="flex flex-col min-h-fit max-h-[600px] py-4 px-3 divide-y divide-zinc-200 dark:divide-zinc-600 shadow-inner">
+    <ScrollableFeed
+      className={cn(
+        "flex flex-col h-fit max-h-[600px] py-4 px-3 divide-y divide-zinc-200 dark:divide-zinc-600",
+        className
+      )}
+    >
       {chatLists.map((chat, index) => (
         <ChatCard key={v4()} chat={chat} index={index} />
       ))}

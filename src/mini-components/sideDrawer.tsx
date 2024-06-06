@@ -63,7 +63,7 @@ const SideDrawer = ({ open, setOpen }: PropsType) => {
         top: 0,
         left: 0,
         padding: "20px",
-        zIndex: "1",
+        zIndex: "30",
       }}
     >
       {/* container */}

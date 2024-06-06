@@ -14,7 +14,7 @@ const Avatar = ({ className, children, ...props }: Props) => {
   return (
     <div
       className={cn(
-        "w-10 h-10 rounded-full uppercase font-[Inter] font-bold flex justify-center items-center bg-zinc-300 dark:bg-zinc-600",
+        "w-10 h-10 rounded-full uppercase font-[Inter] font-bold flex justify-center items-center bg-zinc-300 dark:bg-zinc-600 select-none",
         className
       )}
       {...props}

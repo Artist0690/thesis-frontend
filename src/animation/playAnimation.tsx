@@ -3,11 +3,7 @@ import React from "react";
 import noCurrentChat from "../assets/no_current_chat.json";
 
 const PlayAnimation = () => {
-  return (
-    <div>
-      <Lottie animationData={noCurrentChat} classID="" />
-    </div>
-  );
+  return <Lottie className="w-1/2" animationData={noCurrentChat} />;
 };
 
 export default PlayAnimation;

@@ -22,7 +22,7 @@ const Body = () => {
   }, [currentChat]);
 
   return (
-    <div className="w-full flex-1 p-2 overflow-hidden">
+    <div className="w-full min-h-[520px] max-h-full flex px-2">
       <MessageContainer />
     </div>
   );

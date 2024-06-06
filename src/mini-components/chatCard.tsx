@@ -46,27 +46,33 @@ const ChatCard = (props: Props) => {
 
   return (
     <motion.button
-      initial={{ x: -100, opacity: 0 }}
+      initial={{ y: 100, opacity: 0 }}
       animate={{
-        x: 0,
+        y: 0,
         opacity: 1,
-        transition: { duration: 0.3 * index, when: "once" },
+        transition: {
+          delay: 0.2 * index,
+          duration: 0.3,
+          type: "spring",
+          stiffness: 150,
+          when: "once",
+        },
       }}
       onClick={handleClick}
       disabled={chat._id == currentChat?._id}
-      className={`relative py-2 grid grid-cols-12 items-center focus:ring-1 focus:ring-purple-500 focus:outline-none disabled:bg-zinc-200 dark:disabled:bg-zinc-700 text-zinc-500 dark:text-white disabled:cursor-not-allowed`}
+      className={`relative w-full py-5 grid grid-cols-12 items-center focus:ring-1 focus:ring-purple-500 focus:outline-none disabled:bg-zinc-200 dark:disabled:bg-zinc-700 text-zinc-500 dark:text-white disabled:cursor-not-allowed`}
     >
       {/* avatar */}
-      <div className="h-full grid col-span-3 items-center justify-center">
+      <div className="h-full grid col-span-3 items-center justify-center z-20">
         <Avatar>{chatMate.userInfo.name.charAt(0)}</Avatar>
       </div>
       {/* name & email & latest message */}
-      <div className="h-full grid col-span-7 gap-1 font-[inter thin]">
+      <div className="h-full grid col-span-7 gap-1 font-[Inter] text-sm 2xl:font-normal">
         <span className="flex w-full capitalize font-semibold text-black dark:text-white">
           {chatMate.userInfo.name}
         </span>
         <span className="flex w-full">{chatMate.userInfo.email}</span>
-        <span className="flex w-full">latestMessage:</span>
+        {/* <span className="flex w-full">latestMessage:</span> */}
       </div>
       {/* arrow */}
       <div className="h-full grid col-span-2 items-center justify-center">
@@ -74,7 +80,7 @@ const ChatCard = (props: Props) => {
           initial="initial"
           animate="initial"
           whileHover="hover"
-          className="flex justify-center items-center relative w-10 h-10 p-3 rounded-full border z-10 overflow-hidden border-slate-300"
+          className="flex justify-center items-center relative w-10 h-10 p-3 rounded-full border-2 z-10 overflow-hidden border-slate-300"
         >
           {/* absolute child */}
           {currentChat?._id !== chat._id && (
@@ -84,7 +90,7 @@ const ChatCard = (props: Props) => {
               variants={variants}
             ></motion.div>
           )}
-          <ArrowRight className="w-12 z-20" />
+          <ArrowRight className="w-12 z-20 scale-125 hover:text-white" />
         </motion.span>
       </div>
     </motion.button>

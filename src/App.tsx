@@ -31,7 +31,7 @@ function App() {
     },
   ]);
   return (
-    <div>
+    <div className="w-screen h-screen">
       <RouterProvider router={router} />
       <Toaster richColors closeButton duration={5000} />
     </div>

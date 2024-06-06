@@ -25,7 +25,7 @@ const Body = () => {
   console.log("Chat Lists:", chats);
 
   return (
-    <div className="w-full flex-1 max-h-[600px] p-2 overflow-hidden">
+    <div className="w-full flex-1 max-h-[600px] p-2">
       <ChatListTemplate chatLists={chats} />
     </div>
   );

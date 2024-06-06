@@ -4,7 +4,7 @@ import Body from "./Body";
 
 const PanelOne = () => {
   return (
-    <div className="flex flex-col overflow-hidden divide-indigo-500 dark:divide-black">
+    <div className="flex flex-col divide-indigo-500 dark:divide-black">
       <Header />
       <Body />
     </div>

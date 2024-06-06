@@ -14,7 +14,7 @@ const Header = () => {
       <ThemeToggle />
       <div className="h-full flex gap-x-4">
         <Avatar>{name?.charAt(0)}</Avatar>
-        <span className="font-[Inter] text-zinc-500 dark:text-zinc-300 text-xl font-extrabold capitalize flex justify-center items-center">
+        <span className="font-[Inter] text-zinc-500 dark:text-zinc-300 text-xl font-extrabold capitalize flex justify-center items-center select-none">
           @ {name}
         </span>
       </div>

@@ -80,7 +80,7 @@ const PanelTwo = () => {
   }, [currentChat, passphrase]);
 
   return (
-    <div className="flex flex-col h-full overflow-hidden">
+    <div className="flex flex-col w-full h-full">
       <Header />
       <Body />
       {currentChat && <Footer socket={socket} />}

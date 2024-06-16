@@ -1,0 +1,20 @@
+[33m3e9827d[m[33m ([m[1;36mHEAD -> [m[1;32mv-0.7.9[m[33m)[m add side drawer for responsive design
+[33mad184f2[m change avatar & other UI
+[33m00b38d1[m refactoring & bug fixes
+[33m905934d[m[33m ([m[1;32mv-0.6.9[m[33m)[m change ui, theme
+[33m3e77f3e[m[33m ([m[1;32mv-0.5.9[m[33m)[m fix message duplication error
+[33m91a41e8[m[33m ([m[1;32mv-0.4.9[m[33m)[m added encryption decryption for RSA & AES
+[33ma205351[m[33m ([m[1;32mv-0.3.9[m[33m)[m added finding users
+[33mc769f14[m[33m ([m[1;32mv-0.2.9[m[33m)[m Fix socket io logic
+[33m7342146[m[33m ([m[1;32mv-0.1.9[m[33m)[m added socketIO
+[33mf217705[m modify global states: message lists & current chat and create chat bubble and container for UI
+[33m269191b[m[33m ([m[1;32mv-0.0.9[m[33m)[m create currentChat and some ui inside Panel Two
+[33me45a373[m[33m ([m[1;32mv-0.0.8[m[33m)[m modify setting Chats to global state
+[33maef101f[m[33m ([m[1;32mv-0.0.7[m[33m)[m modify useGainAccess hook & create fetchAllChats and retrievePrvKey_controller
+[33m36f40c4[m[33m ([m[1;32mv-0.0.6[m[33m)[m modify login, userInfo_store, chat_landing
+[33mbcac717[m[33m ([m[1;32mv-0.0.5[m[33m, [m[1;32mv-0.0.4[m[33m)[m add prvkey store in signup process and retrieve prvkey in chat landing component
+[33mba80b8b[m[33m ([m[1;32mv-0.0.3[m[33m)[m add raw RSA key generation files
+[33m4677444[m adding cryptography folder
+[33m0092e38[m[33m ([m[1;32mv-0.0.2[m[33m)[m Finish Signup process
+[33m4acd6c7[m[33m ([m[1;32mv-0.0.1[m[33m, [m[1;32mmaster[m[33m)[m finished login and associating token storing process
+[33med95838[m Initialize project using Create React App

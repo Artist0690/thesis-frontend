@@ -64,7 +64,9 @@ const ChatCard = (props: Props) => {
     >
       {/* avatar */}
       <div className="h-full grid col-span-3 items-center justify-center z-20">
-        <Avatar>{chatMate.userInfo.name.charAt(0)}</Avatar>
+        <Avatar className="bg-purple-300 dark:bg-purple-300 text-purple-600">
+          {chatMate.userInfo.name.charAt(0)}
+        </Avatar>
       </div>
       {/* name & email & latest message */}
       <div className="h-full grid col-span-7 gap-1 font-[Inter] text-sm 2xl:font-normal">

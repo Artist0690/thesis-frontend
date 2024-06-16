@@ -9,6 +9,7 @@ import { userInfo_store } from "../store/userInfo_store";
 import envelope from "../assets/arrow-thin-right-icon.svg";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
+import Avatar from "../components/ui/avatar";
 
 type User = z.infer<typeof UserSchema>;
 
@@ -57,7 +58,9 @@ const UserCard = (props: Props) => {
     >
       {/* avatar */}
       <div className="grid col-span-3">
-        <img src={avatar} className="w-12" />
+        <Avatar className="bg-purple-300 dark:bg-purple-300 text-purple-500">
+          {user.name.charAt(0)}
+        </Avatar>
       </div>
       {/* name & email */}
       <div className="grid col-span-7">

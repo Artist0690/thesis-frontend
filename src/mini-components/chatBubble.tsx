@@ -71,7 +71,7 @@ const ChatBubble = (props: Props) => {
   return (
     <div className={`flex w-full ${scheme.position} ${scheme.iconPosition}`}>
       {/* avatar */}
-      <div className="min-w-[30px] flex justify-start items-end border border-red-500">
+      <div className="min-w-[30px] flex justify-start items-end">
         {isIcon && (
           <Avatar className="w-6 h-6 bg-zinc-300">
             {avatarName?.charAt(0)}
@@ -79,7 +79,7 @@ const ChatBubble = (props: Props) => {
         )}
       </div>
       {/* content & seen indicator */}
-      <div className="flex flex-col max-w-[300px] border border-blue-500">
+      <div className="flex flex-col max-w-[300px]">
         <span
           className={`w-fit ${scheme.bgColor} ${scheme.txColor} rounded-2xl px-3 py-2 font-[Inter] font-normal shadow-sm`}
         >

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { animated, useSpring } from "react-spring";
 import cross_icon from "../assets/close-line-icon.svg";
 import { searchUser_controller } from "../controllers/searchUser_controller";
@@ -8,7 +8,7 @@ import { UserSchema } from "../zod/userSchema";
 import UserCard from "./userCard";
 import { v4 as uuid } from "uuid";
 import { motion } from "framer-motion";
-import Input from "../components/ui/Input";
+import RefInput from "../components/ui/RefInput";
 
 type PropsType = {
   open: boolean;
@@ -19,10 +19,8 @@ type User = z.infer<typeof UserSchema>;
 
 const SideDrawer = ({ open, setOpen }: PropsType) => {
   // local state
-  const [input, setinput] = useState<string>("");
   const [users, setusers] = useState<User[] | null>(null);
-
-  const disabled = input.trim().length > 0 ? false : true;
+  const inputRef = useRef<HTMLInputElement>(null);
 
   // TODO: axios private hook
   const axiosPrivate = useAxiosPrivate();
@@ -33,24 +31,26 @@ const SideDrawer = ({ open, setOpen }: PropsType) => {
 
   // TODO: handle search button
   const handleSearch = async () => {
-    const keyword = input.trim();
+    const input_value = inputRef.current?.value;
+    if (input_value) {
+      const keyword = input_value.trim();
 
-    if (keyword.length < 1) {
-      return;
+      if (keyword.length < 1) {
+        return;
+      }
+
+      searchUser_controller({
+        fetcher: axiosPrivate,
+        name: keyword,
+        setUsers: setusers,
+      });
     }
-
-    // TODO: search User
-    searchUser_controller({
-      fetcher: axiosPrivate,
-      name: keyword,
-      setUsers: setusers,
-    });
   };
 
-  // TODO: handle close button
+  // TODO: handle close button for side_drawer
   const handleClose = () => {
     setusers(null);
-    setinput("");
+    // setinput("");
     setOpen(false);
   };
 
@@ -73,17 +73,11 @@ const SideDrawer = ({ open, setOpen }: PropsType) => {
           <div className="flex flex-row w-fit h-10 gap-x-3 justify-between items-center">
             {/* input */}
             <div className="h-full">
-              <Input
-                value={input}
-                onChange={(e) => setinput(e.target.value)}
-                type="text"
-                placeholder="Search"
-              />
+              <RefInput ref={inputRef} type="text" placeholder="Search" />
             </div>
             {/* search button */}
             <button
               className="capitalize h-full bg-purple-400 disabled:bg-zinc-300 dark:disabled:bg-zinc-600 disabled:border-zinc-300 dark:disabled:border-zinc-600 disabled:cursor-not-allowed hover:bg-opacity-50 focus:ring-1 text-white rounded-lg px-3 py-2 outline-none font-[inter thin] font-normal"
-              disabled={disabled}
               onClick={handleSearch}
             >
               search

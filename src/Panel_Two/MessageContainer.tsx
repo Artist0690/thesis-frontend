@@ -34,7 +34,7 @@ const MessageContainer = () => {
     );
 
   return (
-    <div className="w-full max-h-[520px] rounded-lg bg-zinc-300 bg-opacity-40 dark:bg-opacity-10 shadow-inner dark:shadow-none shadow-zinc-300">
+    <div className="w-full max-h-[520px] rounded-lg bg-zinc-300 bg-opacity-40 dark:bg-opacity-10 shadow-inner dark:shadow-none shadow-zinc-300 z-40">
       {messageLists == null ? (
         <p>Loading</p>
       ) : (

@@ -18,14 +18,6 @@ const MessageContainer = () => {
   // use a hook that fetches messages assciated with chat
   const { msgLists } = useFetchAllMessages();
 
-  // TODO: here we are checking our chat lists
-  // useEffect(() => {
-  //   if (msgLists) console.log("msg lists from hook: ", msgLists);
-  //   if (messageLists) console.log("msg lists from store: ", messageLists);
-  //   if (currentChat && currentChat.latestMessage)
-  //     console.log("latest msg ID: ", currentChat.latestMessage._id);
-  // }, [msgLists, messageLists]);
-
   if (!currentChat)
     return (
       <div className="w-full h-full flex justify-center items-center overflow-hidden rounded-lg bg-zinc-300 bg-opacity-40 dark:bg-opacity-10 shadow-inner dark:shadow-none shadow-zinc-300">
@@ -34,7 +26,7 @@ const MessageContainer = () => {
     );
 
   return (
-    <div className="w-full max-h-[520px] rounded-lg bg-zinc-300 bg-opacity-40 dark:bg-opacity-10 shadow-inner dark:shadow-none shadow-zinc-300 z-40">
+    <div className="w-full max-h-[520px] rounded-lg bg-zinc-200 bg-opacity-40 dark:bg-opacity-10 shadow-inner dark:shadow-none shadow-zinc-300">
       {messageLists == null ? (
         <p>Loading</p>
       ) : (

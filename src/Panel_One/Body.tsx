@@ -25,7 +25,10 @@ const Body = () => {
   console.log("Chat Lists:", chats);
 
   return (
-    <div className="w-full flex-1 max-h-[600px] p-2">
+    <div className="w-full flex-1 flex-col max-h-[600px] p-2">
+      <span className="hidden lg:block ml-2 mb-1 text-zinc-400 dark:text-white select-none">
+        Your Chats
+      </span>
       <ChatListTemplate chatLists={chats} />
     </div>
   );

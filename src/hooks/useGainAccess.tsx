@@ -30,7 +30,7 @@ const useGainAccess = () => {
       .catch((error) => {
         console.log("Login required.");
         // redirect to login page
-        navigate("/login");
+        navigate("/signin");
       });
   };
 

@@ -18,7 +18,7 @@ function App() {
       element: <Chat_landing />,
     },
     {
-      path: "/login",
+      path: "/signin",
       element: <Login_Page />,
     },
     {

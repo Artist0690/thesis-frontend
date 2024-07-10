@@ -30,7 +30,6 @@ const PanelTwo = () => {
   // type
   type Message = z.infer<typeof MessageSchema>;
 
-  // hook for socket event
   useEffect(() => {
     if (currentUserId) {
       // TODO: Join setup event
@@ -40,6 +39,10 @@ const PanelTwo = () => {
         toast.info(data, { position: "top-right", duration: 3000 });
       });
     }
+
+    // return () => {
+    //   socket.disconnect();
+    // };
   }, [currentUserId]);
 
   // hook for events that listen messages

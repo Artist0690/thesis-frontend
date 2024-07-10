@@ -76,7 +76,7 @@ const Signup_Page = () => {
           })
           .then((result) => console.log(result))
           .catch((error) => console.log(error));
-        navigate("/login");
+        navigate("/signin");
       })
       .catch((err) => {
         const error = err as AxiosError;
@@ -163,7 +163,7 @@ const Signup_Page = () => {
           {/* login link */}
           <div className="flex w-full gap-x-2">
             Already have an accont?
-            <Link to="/login" className="font-[inter thin] text-indigo-500">
+            <Link to="/signin" className="font-[inter thin] text-indigo-500">
               Login here
             </Link>
           </div>

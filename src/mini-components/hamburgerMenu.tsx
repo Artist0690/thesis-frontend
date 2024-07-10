@@ -7,6 +7,8 @@ import { v4 } from "uuid";
 import { chats_store } from "../store/chats_store";
 import ChatListTemplate from "../Panel_One/ChatListTemplate";
 import SideDrawer from "./sideDrawer";
+import { logout } from "../api/logout";
+import { useNavigate } from "react-router-dom";
 
 const HamburgerMenu = () => {
   const [open, setopen] = useState<boolean>(false);
@@ -15,6 +17,9 @@ const HamburgerMenu = () => {
 
   // store
   const { chats } = chats_store();
+
+  // router
+  const router = useNavigate();
 
   const handleToggle = () => {
     setopen(!open);
@@ -47,8 +52,15 @@ const HamburgerMenu = () => {
             id="dropdown"
             aria-labelledby="dropdownButton"
           >
-            <Item key={v4()}>profile</Item>
-            <Item key={v4()}>signout</Item>
+            <Item
+              key={v4()}
+              onClick={() => {
+                logout();
+                router("/signin");
+              }}
+            >
+              signout
+            </Item>
             <Item
               key={v4()}
               className="2xl:hidden"

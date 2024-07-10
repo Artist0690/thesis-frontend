@@ -7,8 +7,8 @@ import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { Socket } from "socket.io-client";
 import useStartSocket from "../hooks/useStartSocket";
 import { userInfo_store } from "../store/userInfo_store";
-import { toast } from "sonner";
 import { encrypt_msg } from "../crypto/AES/aes_crypto";
+import { cn } from "@udecode/cn";
 
 type Props = {
   socket: Socket;
@@ -33,11 +33,6 @@ const Footer = (props: Props) => {
 
     socket,
   });
-
-  const buttonColor =
-    input.trim().length > 0
-      ? "text-purple-700 hover:text-purple-500"
-      : "text-purple-300 hover:cursor-not-allowed dark:text-zinc-700";
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     setinput(e.target.value);
@@ -82,12 +77,16 @@ const Footer = (props: Props) => {
           onFocus={(e) => handleTyping(e)}
           onBlur={handleStopTyping}
           placeholder="Type..."
-          className="px-2 py-3 min-w-[400px] font-[Inter] text-lg placeholder:italic rounded-2xl outline-none focus:ring-[1px] focus:ring-violet-500 ring-offset-1 bg-white dark:bg-zinc-600 text-zinc-600 dark:text-white border border-zinc-300 dark:border-zinc-700"
+          className="px-2 py-3 min-w-[400px] font-sans text-lg rounded-2xl outline-none focus:ring-[1px] focus:ring-violet-500 ring-offset-1 bg-white dark:bg-zinc-600 text-zinc-600 dark:text-white border border-zinc-300 dark:border-zinc-700 placeholder:text-md"
         />
       </div>
       <div>
         <IoSendSharp
-          className={`size-8 ${buttonColor} `}
+          className={cn(`size-8 `, {
+            "text-purple-700 hover:text-purple-500": input.trim().length > 0,
+            "text-purple-300 hover:cursor-not-allowed dark:text-zinc-700":
+              input.trim().length < 1,
+          })}
           onClick={() => sendMessage()}
         />
       </div>

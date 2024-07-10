@@ -33,16 +33,19 @@ const ChatListTemplate = (props: Props) => {
     );
 
   return (
-    <ScrollableFeed
-      className={cn(
-        "flex flex-col h-fit max-h-[600px] py-4 px-3 divide-y divide-zinc-200 dark:divide-zinc-600",
-        className
-      )}
-    >
-      {chatLists.map((chat, index) => (
-        <ChatCard key={v4()} chat={chat} index={index} />
-      ))}
-    </ScrollableFeed>
+    <div className="h-full flex flex-col">
+      <div
+        className={cn(
+          "flex flex-col h-fit overflow-y-auto max-h-[480px] min-h-[400px] py-4 px-3 divide-y divide-zinc-200 dark:divide-zinc-600",
+          className
+        )}
+      >
+        {chatLists.map((chat, index) => (
+          <ChatCard key={v4()} chat={chat} index={index} />
+        ))}
+      </div>
+      <div className="flex-1 backdrop-blur-sm bg-white/30 -mt-10 z-20"></div>
+    </div>
   );
 };
 

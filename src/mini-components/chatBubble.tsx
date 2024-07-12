@@ -43,8 +43,6 @@ const ChatBubble = (props: Props) => {
       : false
     : false;
 
-  // const hasNextMessageFromSameUser = nextMessage.sender._id === currentUserId;
-
   return (
     <div className={`flex w-full font-[Inter]`}>
       <div
@@ -54,11 +52,14 @@ const ChatBubble = (props: Props) => {
         })}
       >
         <div
-          className={cn("flex p-2 rounded-lg shadow-sm dark:shadow-none", {
-            "rounded-br-none bg-white dark:bg-slate-900 text-black dark:text-white": isCurrentUser,
-            "rounded-bl-none bg-purple-400 text-black": !isCurrentUser,
-            "rounded-lg": hasNextMessageFromSameUser,
-          })}
+          className={cn(
+            "flex p-2 2xl:max-w-[400px] max-w-[200px] rounded-lg shadow-sm dark:shadow-none",
+            {
+              "rounded-br-none bg-white dark:bg-slate-900 text-black dark:text-white": isCurrentUser,
+              "rounded-bl-none bg-purple-400 text-black": !isCurrentUser,
+              "rounded-lg": hasNextMessageFromSameUser,
+            }
+          )}
         >
           {message.content}
         </div>

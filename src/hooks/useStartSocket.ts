@@ -20,10 +20,14 @@ const useStartSocket = (props: Props) => {
   const { currentChat } = currentChat_store();
   const { addMessage } = messageLists_store();
 
+  const join_room_listener = (data: string) => {
+    console.log(data);
+  };
+
   useEffect(() => {
     socket.emit("join_room", { roomId: roomId });
 
-    socket.on("join_room", (data: any) => {
+    socket.on("join_room", (data: string) => {
       console.log(data);
     });
 
@@ -32,9 +36,10 @@ const useStartSocket = (props: Props) => {
       data == true ? startTyping() : stopTyping();
     });
 
-    // return () => {
-    //   socket.disconnect();
-    // };
+    return () => {
+      socket.off("join_room");
+      socket.off("listen_typing");
+    };
   }, [socket]);
 
   const handleTyping = (e: React.ChangeEvent<HTMLInputElement>) => {

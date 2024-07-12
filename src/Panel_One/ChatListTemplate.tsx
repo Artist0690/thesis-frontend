@@ -44,7 +44,7 @@ const ChatListTemplate = (props: Props) => {
           <ChatCard key={v4()} chat={chat} index={index} />
         ))}
       </div>
-      <div className="flex-1 backdrop-blur-sm bg-white/30 -mt-10 z-20"></div>
+      <div className="flex-1 backdrop-blur-sm bg-white/30 dark:bg-slate-900 -mt-10 z-20"></div>
     </div>
   );
 };

@@ -20,7 +20,7 @@ const Header = () => {
           <span className=" text-zinc-500 dark:text-zinc-300 text-xl font-extrabold capitalize select-none">
             {name}
           </span>
-          <span className="text-sm">{email}</span>
+          <span className="text-xs">{email}</span>
         </div>
       </div>
 

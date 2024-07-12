@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import forge from "node-forge";
-import z, { TypeOf } from "zod";
+import z from "zod";
 
 const KeyGeneration = () => {
   const Scheme = z.object({
@@ -19,7 +19,7 @@ const KeyGeneration = () => {
           console.log("key gen error!");
           return;
         }
-        // if success
+
         const prvKey = forge.pki.privateKeyToPem(keyPairs.privateKey);
         const pubKey = forge.pki.publicKeyToPem(keyPairs.publicKey);
         const payload: Props = {

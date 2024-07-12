@@ -3,7 +3,10 @@ import { toast } from "sonner";
 
 export const decrypt_RSA_cipher = (cipher: string, pem: string) => {
   const prvKey = forge.pki.privateKeyFromPem(pem);
-  const decipher = prvKey.decrypt(cipher, "RSA-OAEP");
+  const decodedCipher = forge.util.decode64(cipher);
+  // console.log("cipher ", cipher);
+  // console.log("decoded cipher ", decodedCipher);
+  const decipher = prvKey.decrypt(decodedCipher, "RSA-OAEP");
   toast.info(`plaintext passphrase ${decipher}`, {
     position: "top-right",
     duration: 2000,

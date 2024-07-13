@@ -11,8 +11,6 @@ const Body = () => {
   // hook that store passphrase of current chat
   // hook will be triggered every current chat changes
   useEffect(() => {
-    // if (currentChat?.latestMessage)
-    // console.log("current chat:", currentChat.latestMessage._id);
     if (currentChat?.users) {
       setPassphrase({
         privateKey: rsa_private_key!,
@@ -21,11 +19,7 @@ const Body = () => {
     }
   }, [currentChat]);
 
-  return (
-    <div className="w-full min-h-[520px] max-h-full flex px-2">
-      <MessageContainer />
-    </div>
-  );
+  return <MessageContainer />;
 };
 
 export default Body;

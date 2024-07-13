@@ -13,6 +13,7 @@ import { chats_store } from "../store/chats_store";
 import { fetchAllChats_controller } from "../controllers/fetchAllChats_controller";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { decrypt_cipher } from "../crypto/AES/aes_crypto";
+import MessageContainer from "./MessageContainer";
 
 const URL = "http://localhost:5000";
 const socket = io(URL);
@@ -85,7 +86,8 @@ const PanelTwo = () => {
   return (
     <div className="flex flex-col w-full h-full">
       <Header />
-      <Body />
+      {/* <Body /> */}
+      <MessageContainer />
       {currentChat && <Footer socket={socket} />}
     </div>
   );

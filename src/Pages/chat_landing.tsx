@@ -21,16 +21,16 @@ const Chat_landing = () => {
   }, [id]);
 
   return (
-    // chat landing page
-    <div className="py-5 px-10 items-center w-full h-full text-slate-400 dark:text-white bg-zinc-300 dark:bg-black">
-      {/* panel wrapper */}
-      <div className="grid 2xl:grid-cols-4 grid-rows-4 h-full rounded-2xl bg-white dark:bg-slate-900 overflow-hidden">
-        {/* panel one container */}
-        <div className="hidden 2xl:grid 2xl:col-span-1 row-span-1 2xl:row-span-full bg-white dark:bg-gray-900">
+    // page
+    <div className="flex h-full w-full items-center justify-center text-slate-400 dark:text-white bg-zinc-300 dark:bg-black ">
+      {/* container */}
+      <div className="md:w-[calc(100%-5rem)] md:h-[calc(100%-5rem)] w-full h-full flex items-center justify-center rounded-lg bg-white dark:bg-slate-900 overflow-hidden 2xl:divide-x divide-zinc-200">
+        {/* left panel */}
+        <div className="2xl:block hidden w-[calc(40%)] h-full bg-white dark:bg-gray-900">
           <PanelOne />
         </div>
-        {/* panel two container */}
-        <div className="h-full grid 2xl:col-span-3 row-span-3 2xl:row-span-full bg-white dark:bg-gray-900">
+        {/* right panel */}
+        <div className="flex flex-col w-full h-full bg-white dark:bg-gray-900">
           <PanelTwo />
         </div>
       </div>

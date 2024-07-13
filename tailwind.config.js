@@ -2,7 +2,11 @@
 module.exports = {
   content: ["./src/**/*.{html,js,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      screens: {
+        xs: "300px",
+      },
+    },
   },
   plugins: [require("tailwindcss"), require("autoprefixer")],
   darkMode: "class",

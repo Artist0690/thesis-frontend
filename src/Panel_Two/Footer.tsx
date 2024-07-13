@@ -68,8 +68,8 @@ const Footer = (props: Props) => {
   };
 
   return (
-    <div className="flex gap-x-4 justify-start items-center py-3 px-3">
-      <div>
+    <div className="flex h-20 gap-x-4 justify-start items-center px-3">
+      <div className="w-[calc(80%)] md:w-[400px]">
         <input
           type="text"
           value={input}
@@ -77,12 +77,12 @@ const Footer = (props: Props) => {
           onFocus={(e) => handleTyping(e)}
           onBlur={handleStopTyping}
           placeholder="Type..."
-          className="px-2 py-3 min-w-[400px] font-sans text-lg rounded-2xl outline-none focus:ring-[1px] focus:ring-violet-500 ring-offset-1 bg-white dark:bg-zinc-600 text-zinc-600 dark:text-white border border-zinc-300 dark:border-zinc-700 placeholder:text-md"
+          className="px-2 py-3 w-full font-sans text-xs 2xl:text-lg rounded-2xl outline-none focus:ring-[1px] focus:ring-violet-500 ring-offset-1 bg-white dark:bg-zinc-600 text-zinc-600 dark:text-white border border-zinc-300 dark:border-zinc-700 placeholder:text-md"
         />
       </div>
       <div>
         <IoSendSharp
-          className={cn(`size-8 `, {
+          className={cn(`md:size-8 size-6`, {
             "text-purple-700 hover:text-purple-500": input.trim().length > 0,
             "text-purple-300 hover:cursor-not-allowed dark:text-zinc-700":
               input.trim().length < 1,

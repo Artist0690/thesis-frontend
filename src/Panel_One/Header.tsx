@@ -14,7 +14,7 @@ const Header = () => {
   };
 
   return (
-    <div className="hidden 2xl:flex px-3 py-4 justify-between">
+    <div className="hidden 2xl:flex h-20 px-2 items-center justify-between">
       {/* search icon */}
       <motion.span
         whileHover={{ scale: 1.2 }}

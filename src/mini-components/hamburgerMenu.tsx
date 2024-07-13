@@ -103,7 +103,7 @@ const Item = ({ className, children, ...props }: ItemProps) => {
   return (
     <span
       className={cn(
-        "relative flex justify-center items-center w-full px-6 py-2 font-[Inter] capitalize text-black dark:text-white hover:bg-purple-500 hover:bg-opacity-10",
+        "relative flex justify-center items-center w-full sm:px-6 px-2 py-2 font-[Inter] text-xs sm:text-emerald-50 capitalize text-black dark:text-white hover:bg-purple-500 hover:bg-opacity-10",
         className
       )}
       {...props}

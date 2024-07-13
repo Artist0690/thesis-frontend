@@ -53,10 +53,10 @@ const ChatBubble = (props: Props) => {
       >
         <div
           className={cn(
-            "flex p-2 2xl:max-w-[400px] max-w-[200px] rounded-lg shadow-sm dark:shadow-none",
+            "flex p-2 2xl:max-w-[400px] max-w-[200px] rounded-lg shadow-lg dark:shadow-none",
             {
-              "rounded-br-none bg-white dark:bg-slate-900 text-black dark:text-white": isCurrentUser,
-              "rounded-bl-none bg-purple-400 text-black": !isCurrentUser,
+              "rounded-br-none bg-zinc-200 dark:bg-slate-700 text-black dark:text-white": isCurrentUser,
+              "rounded-bl-none bg-purple-500 text-white": !isCurrentUser,
               "rounded-lg": hasNextMessageFromSameUser,
             }
           )}

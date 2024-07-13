@@ -1,25 +1,65 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import z from "zod";
-import { ChatSchema } from "../zod/chatSchema";
+import { ChatSchema, MessageSchema } from "../zod/chatSchema";
 import ChatCard from "../mini-components/chatCard";
 import { v4 } from "uuid";
 import ScrollableFeed from "react-scrollable-feed";
 import { motion } from "framer-motion";
 import { cn } from "@udecode/cn";
+import { io } from "socket.io-client";
+import { toast } from "sonner";
+import { userInfo_store } from "../store/userInfo_store";
+import { currentChat_store } from "../store/currentChat_store";
 
 type Chat = z.infer<typeof ChatSchema>;
+
+type Message = z.infer<typeof MessageSchema>;
 
 type Props = {
   chatLists: Chat[];
   className?: string;
 };
 
+const URL = "http://localhost:5000";
+const socket = io(URL);
+
 const ChatListTemplate = (props: Props) => {
   const { chatLists, className } = props;
+  const { _id: currentUserId } = userInfo_store();
+  const { currentChat } = currentChat_store();
+  const [Notification, setNotification] = useState<Message[]>([]);
+
+  const pushNotification = (data: any) => {
+    try {
+      const notification = MessageSchema.parse(data);
+      const shouldNotify = currentChat?._id !== notification.chat;
+      if (shouldNotify) {
+        setNotification((prv) => [...prv, notification]);
+      }
+      return;
+    } catch (error) {
+      console.log("notification error!");
+    }
+  };
 
   useEffect(() => {
-    console.log("chat list template re-render");
-  }, []);
+    if (currentChat) {
+      const filteredNotification = Notification.filter(
+        (noti) => noti.chat !== currentChat._id
+      );
+      setNotification(filteredNotification);
+    }
+  }, [currentChat]);
+
+  useEffect(() => {
+    socket.emit("setup", { userId: currentUserId });
+
+    socket.on("receive_msg", pushNotification);
+
+    return () => {
+      socket.off("receive_msg", pushNotification);
+    };
+  }, [currentUserId, currentChat]);
 
   if (chatLists == null || chatLists.length < 1)
     return (
@@ -40,9 +80,20 @@ const ChatListTemplate = (props: Props) => {
           className
         )}
       >
-        {chatLists.map((chat, index) => (
-          <ChatCard key={v4()} chat={chat} index={index} />
-        ))}
+        {chatLists.map((chat, index) => {
+          const numberOfNotification = Notification.filter((noti) => {
+            return noti.chat === chat._id;
+          }).length;
+
+          return (
+            <ChatCard
+              key={v4()}
+              numberOfNotification={numberOfNotification}
+              chat={chat}
+              index={index}
+            />
+          );
+        })}
       </div>
       <div className="flex-1 backdrop-blur-sm bg-white/30 dark:bg-slate-900 -mt-10 z-20"></div>
     </div>

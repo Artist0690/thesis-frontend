@@ -70,7 +70,9 @@ const ChatBubble = (props: Props) => {
           })}
         >
           {hasNextMessageFromSameUser ? null : (
-            <Avatar className={cn("w-4 h-4 text-xs dark:bg-black")}>
+            <Avatar
+              className={cn("w-4 h-4 text-xs dark:bg-white dark:text-black")}
+            >
               {isCurrentUser
                 ? currentUserName![0]
                 : chatMateInfo.userInfo.name[0]}

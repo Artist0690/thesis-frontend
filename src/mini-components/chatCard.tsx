@@ -2,30 +2,21 @@ import z from "zod";
 import { ChatSchema } from "../zod/chatSchema";
 import { userInfo_store } from "../store/userInfo_store";
 import { currentChat_store } from "../store/currentChat_store";
-import { motion } from "framer-motion";
 import { useEffect } from "react";
 import { ArrowRight } from "lucide-react";
 import Avatar from "../components/ui/avatar";
-
-const variants = {
-  initial: {
-    x: "-100%",
-  },
-  hover: {
-    x: 0,
-    transition: { type: "tween", duration: 0.3 },
-  },
-};
+import { cn } from "@udecode/cn";
 
 type Chat = z.infer<typeof ChatSchema>;
 
 type Props = {
   chat: Chat;
   index: number;
+  numberOfNotification: number;
 };
 
 const ChatCard = (props: Props) => {
-  const { chat, index } = props;
+  const { chat, index, numberOfNotification } = props;
 
   // store
   const { _id: currentUserId } = userInfo_store();
@@ -45,22 +36,10 @@ const ChatCard = (props: Props) => {
   }, []);
 
   return (
-    <motion.button
-      initial={{ y: 100, opacity: 0 }}
-      animate={{
-        y: 0,
-        opacity: 1,
-        transition: {
-          delay: 0.2 * index,
-          duration: 0.3,
-          type: "spring",
-          stiffness: 150,
-          when: "once",
-        },
-      }}
+    <button
       onClick={handleClick}
       disabled={chat._id == currentChat?._id}
-      className={`relative w-full py-5 grid grid-cols-12 items-center focus:ring-1 focus:ring-purple-500 focus:outline-none disabled:bg-zinc-200 dark:disabled:bg-zinc-700 text-zinc-500 dark:text-white disabled:cursor-not-allowed`}
+      className={`relative w-full py-5 grid grid-cols-12 items-center focus:ring-1 focus:ring-purple-500 focus:outline-none disabled:bg-zinc-400/30 disabled:rounded-lg dark:disabled:bg-zinc-700/30 text-zinc-500 dark:text-white disabled:cursor-not-allowed`}
     >
       {/* avatar */}
       <div className="h-full grid col-span-3 items-center justify-center z-20">
@@ -70,32 +49,39 @@ const ChatCard = (props: Props) => {
       </div>
       {/* name & email & latest message */}
       <div className="h-full grid col-span-7 gap-1 font-[Inter] text-sm 2xl:font-normal">
-        <span className="flex w-full capitalize font-semibold text-black dark:text-white">
+        <span
+          className={cn(
+            "flex w-full capitalize font-semibold text-base text-black dark:text-white",
+            {
+              "text-indigo-600 dark:text-purple-400":
+                chat._id === currentChat?._id,
+            }
+          )}
+        >
           {chatMate.userInfo.name}
         </span>
-        <span className="flex w-full">{chatMate.userInfo.email}</span>
+        <span
+          className={cn("flex w-full text-sm", {
+            "text-indigo-600 dark:text-purple-400":
+              chat._id === currentChat?._id,
+          })}
+        >
+          {chatMate.userInfo.email}
+        </span>
         {/* <span className="flex w-full">latestMessage:</span> */}
       </div>
       {/* arrow */}
       <div className="h-full grid col-span-2 items-center justify-center">
-        <motion.span
-          initial="initial"
-          animate="initial"
-          whileHover="hover"
-          className="flex justify-center items-center relative w-10 h-10 p-3 rounded-full border-2 z-10 overflow-hidden border-slate-300"
-        >
-          {/* absolute child */}
-          {currentChat?._id !== chat._id && (
-            <motion.div
-              className="absolute w-full h-full bg-purple-400 rounded-full top-0 left-0"
-              key={"child"}
-              variants={variants}
-            ></motion.div>
-          )}
+        <span className="flex justify-center items-center relative w-10 h-10 p-3 rounded-full border-2 z-10 overflow-hidden border-slate-300">
           <ArrowRight className="w-12 z-20 scale-125 hover:text-white" />
-        </motion.span>
+        </span>
       </div>
-    </motion.button>
+      {numberOfNotification > 0 ? (
+        <span className="absolute bg-purple-500 rounded-full justify-center items-center right-0 top-0 flex w-4 h-4 text-xs text-white">
+          {numberOfNotification}
+        </span>
+      ) : null}
+    </button>
   );
 };
 

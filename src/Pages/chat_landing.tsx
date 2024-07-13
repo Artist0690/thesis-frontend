@@ -24,7 +24,7 @@ const Chat_landing = () => {
     // page
     <div className="flex h-full w-full items-center justify-center text-slate-400 dark:text-white bg-zinc-300 dark:bg-black ">
       {/* container */}
-      <div className="md:w-[calc(100%-5rem)] md:h-[calc(100%-5rem)] w-full h-full flex items-center justify-center rounded-lg bg-white dark:bg-slate-900 overflow-hidden 2xl:divide-x divide-zinc-200">
+      <div className="md:w-[calc(100%-5rem)] md:h-[calc(100%-5rem)] w-full h-full flex items-center justify-center rounded-lg bg-white dark:bg-slate-900 overflow-hidden 2xl:divide-x divide-zinc-200 dark:divide-slate-700">
         {/* left panel */}
         <div className="2xl:block hidden w-[calc(40%)] h-full bg-white dark:bg-gray-900">
           <PanelOne />

@@ -25,52 +25,46 @@ const PanelTwo = () => {
   const { addMessage } = messageLists_store();
   const { chats, setAllChats } = chats_store();
 
-  // axios private hook
   const axiosPrivate = useAxiosPrivate();
 
-  // type
   type Message = z.infer<typeof MessageSchema>;
 
   useEffect(() => {
     if (currentUserId) {
-      // TODO: Join setup event
+      // TODO: Join setup event, entering own room
       socket.emit("setup", { userId: currentUserId });
 
       socket.on("setup", (data: string) => {
-        toast.info(data, { position: "top-right", duration: 3000 });
+        // toast.info(data, { position: "top-right", duration: 3000 });
       });
     }
 
-    // return () => {
-    //   socket.disconnect();
-    // };
+    return () => {
+      socket.off("setup");
+    };
   }, [currentUserId]);
 
   // hook for events that listen messages
   useEffect(() => {
-    // Listen chat event
     socket.on("receive_msg", (data: Message) => {
       console.log("receive_msg event:", data);
 
-      // if received message is brand new chat
       const isChat = chats.filter((chat) => chat._id == data.chat)[0];
       if (!isChat) {
-        // synchronize frontend chat lists with backend
         fetchAllChats_controller({
           fetcher: axiosPrivate,
           setChatLists: setAllChats,
         });
         return;
       }
-      // TODO: if received message is not associated with current chat
+
       if (!currentChat || data.chat !== currentChat._id) {
-        toast.success(`Someone sent you a message.`, {
-          position: "top-right",
-          duration: 2000,
-        });
+        // toast.success(`Someone sent you a message.`, {
+        //   position: "top-right",
+        //   duration: 2000,
+        // });
         return;
       } else {
-        // TODO: decrypt received message and add to message lists
         if (passphrase) {
           const decipher = decrypt_cipher({
             cipher: data.content,
@@ -81,6 +75,10 @@ const PanelTwo = () => {
         }
       }
     });
+
+    return () => {
+      socket.off("receive_msg");
+    };
   }, [currentChat, passphrase]);
 
   return (

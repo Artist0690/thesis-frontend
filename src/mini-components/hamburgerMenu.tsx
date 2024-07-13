@@ -48,7 +48,7 @@ const HamburgerMenu = () => {
               transition: { delay: 0.1, duration: 0.3, when: "once" },
             }}
             exit={{ opacity: 0, transition: { duration: 0.3 } }}
-            className="absolute transform -translate-x-1/3 translate-y-3 w-auto h-auto px-3 py-2 overflow-hidden shadow-lg cursor-pointer bg-zinc-200 dark:bg-gray-900 dark:text-white divide-y divide-slate-300 dark:divide-zinc-600 rounded-lg"
+            className="absolute transform -translate-x-1/3 translate-y-3 w-auto h-auto px-3 py-2 overflow-hidden shadow-lg cursor-pointer bg-gray-50 dark:bg-gray-700 divide-y divide-slate-300 dark:divide-zinc-600 rounded-lg"
             id="dropdown"
             aria-labelledby="dropdownButton"
           >
@@ -76,18 +76,18 @@ const HamburgerMenu = () => {
               search
             </Item>
           </motion.div>
-          {/* modal */}
-          <Modal openModal={modalOpen} setOpenModal={setModalOpen} key={v4()}>
-            <ChatListTemplate
-              key={v4()}
-              chatLists={chats}
-              className="bg-white dark:bg-slate-700 divide-y divide-zinc-200 dark:divide-slate-600 pr-3"
-            />
-          </Modal>
-          {/* side drawer */}
-          <SideDrawer key={v4()} open={sideDrawer} setOpen={setSideDrawer} />
         </AnimatePresence>
       )}
+      {/* modal */}
+      <Modal openModal={modalOpen} setOpenModal={setModalOpen} key={v4()}>
+        <ChatListTemplate
+          key={v4()}
+          chatLists={chats}
+          className="bg-white dark:bg-slate-700 divide-y divide-zinc-200 dark:divide-slate-600 pr-3"
+        />
+      </Modal>
+      {/* side drawer */}
+      <SideDrawer key={v4()} open={sideDrawer} setOpen={setSideDrawer} />
     </div>
   );
 };
@@ -103,7 +103,7 @@ const Item = ({ className, children, ...props }: ItemProps) => {
   return (
     <span
       className={cn(
-        "relative flex justify-center items-center w-full sm:px-6 px-2 py-2 font-[Inter] text-xs sm:text-emerald-50 capitalize text-black dark:text-white hover:bg-purple-500 hover:bg-opacity-10",
+        "relative flex justify-center items-center w-full sm:px-6 px-2 py-2 font-[Inter] text-xs  capitalize text-black dark:text-white hover:bg-zinc-200 dark:hover:bg-slate-600",
         className
       )}
       {...props}

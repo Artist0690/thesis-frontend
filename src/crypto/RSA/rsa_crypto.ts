@@ -7,9 +7,9 @@ export const decrypt_RSA_cipher = (cipher: string, pem: string) => {
   // console.log("cipher ", cipher);
   // console.log("decoded cipher ", decodedCipher);
   const decipher = prvKey.decrypt(decodedCipher, "RSA-OAEP");
-  toast.info(`plaintext passphrase ${decipher}`, {
-    position: "top-right",
-    duration: 2000,
-  });
+  // toast.info(`plaintext passphrase ${decipher}`, {
+  //   position: "top-right",
+  //   duration: 2000,
+  // });
   return decipher;
 };

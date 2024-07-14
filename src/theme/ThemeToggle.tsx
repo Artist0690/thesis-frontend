@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import moon from "../assets/moon-svgrepo-com.svg";
 import sun from "../assets/icons8-sun.svg";
+import { toast } from "sonner";
 
 const icon_variants = {
   initial: {
@@ -27,11 +28,26 @@ const icon_variants = {
   },
 };
 
+const initialTheme = () => {
+  const previousTheme = localStorage.getItem("MERN-chat-app");
+  const theme = previousTheme === "light" ? previousTheme : "dark";
+  console.log("previousTheme", previousTheme);
+
+  const shouldToggle = theme === "dark" ? true : false;
+
+  if (shouldToggle) {
+    document.documentElement.classList.add("dark");
+  }
+
+  return shouldToggle;
+};
+
 const ThemeToggle = () => {
-  const [dark, setdark] = useState<boolean>(false);
+  const [dark, setdark] = useState<boolean>(initialTheme());
 
   const toggleTheme = () => {
-    setdark(!dark);
+    setdark((prv) => !prv);
+    localStorage.setItem("MERN-chat-app", dark ? "light" : "dark");
     document.documentElement.classList.toggle("dark");
   };
 

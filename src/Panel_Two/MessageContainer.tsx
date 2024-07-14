@@ -1,8 +1,6 @@
 import { useEffect } from "react";
 import { currentChat_store } from "../store/currentChat_store";
-import PlayAnimation from "../animation/playAnimation";
 import useFetchAllMessages from "../hooks/useFetchAllMessages";
-import ScrollableFeed from "react-scrollable-feed";
 import { v4 as uuid } from "uuid";
 import ChatBubble from "../mini-components/chatBubble";
 import { messageLists_store } from "../store/messageLists_store";
@@ -32,7 +30,7 @@ const MessageContainer = () => {
   if (!currentChat)
     return (
       <div className="flex-1 flex items-center max-h-[calc(100%-2rem)] justify-center">
-        <PlayAnimation />
+        <p className="text-lg font-[Inter]">No current chat here...</p>
       </div>
     );
 

@@ -5,15 +5,21 @@ import hulk from "../assets/icons8-hulk.svg";
 import { userInfo_store } from "../store/userInfo_store";
 import Avatar from "../components/ui/avatar";
 import { currentChat_store } from "../store/currentChat_store";
+import { toast } from "sonner";
+import { MessageCircleX } from "lucide-react";
 
 const Header = () => {
   // store
   const currentUser = userInfo_store();
-  const { currentChat } = currentChat_store();
+  const { currentChat, resetCurrentChat } = currentChat_store();
 
   const chatMate = currentChat?.users.filter(
     (user) => user.userInfo._id !== currentUser._id
   )[0].userInfo;
+
+  const clearCurrentChat = () => {
+    resetCurrentChat();
+  };
 
   return (
     <div className="flex flex-shrink-0 h-20 px-3 justify-between items-center">
@@ -29,6 +35,9 @@ const Header = () => {
             </span>
             <span className="text-xs">{chatMate?.email}</span>
           </div>
+          <span onClick={clearCurrentChat}>
+            <MessageCircleX className="w-6 h-6 text-gray-400 hover:text-red-500" />
+          </span>
         </div>
       ) : null}
 

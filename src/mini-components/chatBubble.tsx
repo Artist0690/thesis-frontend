@@ -56,7 +56,7 @@ const ChatBubble = (props: Props) => {
             "flex p-2 2xl:max-w-[400px] max-w-[200px] rounded-lg shadow-lg dark:shadow-none",
             {
               "rounded-br-none bg-zinc-200 dark:bg-slate-700 text-black dark:text-white": isCurrentUser,
-              "rounded-bl-none bg-purple-500 text-white": !isCurrentUser,
+              "rounded-bl-none bg-purple-500 dark:bg-purple-800 text-white": !isCurrentUser,
               "rounded-lg": hasNextMessageFromSameUser,
             }
           )}

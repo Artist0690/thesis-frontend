@@ -22,7 +22,7 @@ const Chat_landing = () => {
 
   return (
     // page
-    <div className="flex h-full w-full items-center justify-center text-slate-400 dark:text-white bg-zinc-300 dark:bg-black ">
+    <div className="flex h-full w-full items-center justify-center text-slate-400 dark:text-white bg-white dark:bg-slate-900 ">
       {/* container */}
       <div className="md:w-[calc(100%-5rem)] md:h-[calc(100%-5rem)] w-full h-full flex items-center justify-center rounded-lg bg-white dark:bg-slate-900 overflow-hidden 2xl:divide-x divide-zinc-200 dark:divide-slate-700">
         {/* left panel */}

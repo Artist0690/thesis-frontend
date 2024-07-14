@@ -17,6 +17,7 @@ type Chat = {
 
 type Methods = {
   setCurrentChat: (payload: ChatSchema) => void;
+  resetCurrentChat: () => void;
   updateLatestMsg: (payload: { chatId: string; msgId: string }) => void;
   setPassphrase: (payload: {
     privateKey: string;
@@ -30,6 +31,10 @@ export const currentChat_store = create<Store>((set) => ({
   currentChat: null,
   setCurrentChat: (payload) => {
     set((state) => ({ currentChat: payload }));
+  },
+
+  resetCurrentChat() {
+    set((state) => ({ currentChat: null }));
   },
 
   passphrase: null,

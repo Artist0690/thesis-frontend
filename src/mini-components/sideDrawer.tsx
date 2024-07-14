@@ -21,6 +21,7 @@ const SideDrawer = ({ open, setOpen }: PropsType) => {
   // local state
   const [users, setusers] = useState<User[] | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const sideDrawerRef = useRef<HTMLDivElement>(null);
 
   // TODO: axios private hook
   const axiosPrivate = useAxiosPrivate();
@@ -50,7 +51,6 @@ const SideDrawer = ({ open, setOpen }: PropsType) => {
   // TODO: handle close button for side_drawer
   const handleClose = () => {
     setusers(null);
-    // setinput("");
     setOpen(false);
   };
 

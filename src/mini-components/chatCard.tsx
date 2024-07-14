@@ -3,7 +3,7 @@ import { ChatSchema } from "../zod/chatSchema";
 import { userInfo_store } from "../store/userInfo_store";
 import { currentChat_store } from "../store/currentChat_store";
 import { useEffect } from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, SquareArrowOutUpRight } from "lucide-react";
 import Avatar from "../components/ui/avatar";
 import { cn } from "@udecode/cn";
 
@@ -39,7 +39,7 @@ const ChatCard = (props: Props) => {
     <button
       onClick={handleClick}
       disabled={chat._id == currentChat?._id}
-      className={`relative w-full py-5 grid grid-cols-12 items-center focus:ring-1 focus:ring-purple-500 focus:outline-none disabled:bg-zinc-400/30 disabled:rounded-lg dark:disabled:bg-zinc-700/30 text-zinc-500 dark:text-white disabled:cursor-not-allowed`}
+      className={`relative w-full py-5 grid grid-cols-12 items-center focus:ring-1 focus:ring-purple-500 focus:outline-none disabled:bg-zinc-400/30 disabled:rounded-lg dark:disabled:bg-zinc-700/30 text-zinc-500 dark:text-white disabled:cursor-not-allowed group`}
     >
       {/* avatar */}
       <div className="h-full grid col-span-3 items-center justify-center z-20">
@@ -72,9 +72,7 @@ const ChatCard = (props: Props) => {
       </div>
       {/* arrow */}
       <div className="h-full grid col-span-2 items-center justify-center">
-        <span className="flex justify-center items-center relative w-10 h-10 p-3 rounded-full border-2 z-10 overflow-hidden border-slate-300">
-          <ArrowRight className="w-12 z-20 scale-125 hover:text-white" />
-        </span>
+        <SquareArrowOutUpRight className="w-6 h-6 text-gray-400 hover:text-purple-500 group-disabled:text-gray-300 dark:group-disabled:text-gray-700" />
       </div>
       {numberOfNotification > 0 ? (
         <span className="absolute bg-purple-500 rounded-full justify-center items-center right-0 top-0 flex w-4 h-4 text-xs text-white">

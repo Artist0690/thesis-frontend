@@ -52,7 +52,7 @@ const useFetchAllMessages = () => {
     if (currentChat && currentChat?._id) {
       fetchAllMessages();
     }
-  }, [currentChat?._id, passphrase]);
+  }, [currentChat, passphrase]);
 
   return { msgLists };
 };

@@ -1,11 +1,11 @@
-import z from "zod";
-import { ChatSchema } from "../zod/chatSchema";
-import { userInfo_store } from "../store/userInfo_store";
-import { currentChat_store } from "../store/currentChat_store";
-import { useEffect } from "react";
-import { ArrowRight, SquareArrowOutUpRight } from "lucide-react";
-import Avatar from "../components/ui/avatar";
 import { cn } from "@udecode/cn";
+import { SquareArrowOutUpRight } from "lucide-react";
+import { useEffect } from "react";
+import z from "zod";
+import Avatar from "../components/ui/avatar";
+import { currentChat_store } from "../store/currentChat_store";
+import { userInfo_store } from "../store/userInfo_store";
+import { ChatSchema } from "../zod/chatSchema";
 
 type Chat = z.infer<typeof ChatSchema>;
 

@@ -1,12 +1,11 @@
-import React, { useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link, useNavigate } from "react-router-dom";
-import { login_controller } from "../controllers/login_controller";
 import { AxiosError } from "axios";
+import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import z from "zod";
+import { login_controller } from "../controllers/login_controller";
 import { userInfo_store } from "../store/userInfo_store";
-import Input from "../components/ui/Input";
 
 const Login_Page = () => {
   const errorMessageSchema = z.object({
@@ -77,12 +76,12 @@ const Login_Page = () => {
 
   return (
     // page
-    <div className="flex w-full h-screen bg-zinc-100 justify-center items-center">
+    <div className="flex w-full h-screen bg-white justify-center items-center">
       {/* container */}
-      <div className="flex flex-col min-w-[500px] bg-white gap-y-5 border border-slate-200 rounded-md p-10 shadow-sm">
+      <div className="flex flex-col w-full md:w-[500px] bg-white gap-y-5 border-0 md:border border-slate-200 rounded-md p-3 md:p-10">
         {/* header */}
         <div>
-          <h1 className="font-[inter thin] font-semibold text-2xl">
+          <h1 className="font-[inter thin] font-bold text-2xl">
             Sign in to your account
           </h1>
         </div>

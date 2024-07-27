@@ -1,13 +1,13 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { AxiosError } from "axios";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import z, { string } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useNavigate } from "react-router-dom";
+import z from "zod";
 import { signup_controller } from "../controllers/signup_controller";
-import { AxiosError } from "axios";
 import KeyGeneration from "../crypto/RSA/KeyGeneration";
-import { signupResponseSchema } from "../zod/signupResponse";
 import { dexie_db } from "../dexie_db/db";
+import { signupResponseSchema } from "../zod/signupResponse";
 
 const Signup_Page = () => {
   const errorMessageSchema = z.object({ message: z.string() });
@@ -92,10 +92,10 @@ const Signup_Page = () => {
     // page
     <div className="flex w-full h-screen bg-white justify-center items-center">
       {/* container */}
-      <div className="flex flex-col min-w-[500px] bg-white border border-slate-200 rounded-md gap-y-5 p-10 shadow-sm">
+      <div className="flex flex-col w-full md:w-[500px] border-0 bg-white md:border border-slate-200 rounded-md gap-y-5 p-3 md:p-10">
         {/* header */}
         <div>
-          <h1 className="font-[inter thin] font-semibold text-2xl">
+          <h1 className="font-[inter thin] font-bold text-2xl">
             Create an account
           </h1>
         </div>
@@ -164,7 +164,7 @@ const Signup_Page = () => {
           <div className="flex w-full gap-x-2">
             Already have an accont?
             <Link to="/signin" className="font-[inter thin] text-indigo-500">
-              Login here
+              Sign in here
             </Link>
           </div>
         </form>

@@ -1,12 +1,9 @@
-import React from "react";
-import ThemeToggle from "../theme/ThemeToggle";
-import HamburgerMenu from "../mini-components/hamburgerMenu";
-import hulk from "../assets/icons8-hulk.svg";
-import { userInfo_store } from "../store/userInfo_store";
-import Avatar from "../components/ui/avatar";
-import { currentChat_store } from "../store/currentChat_store";
-import { toast } from "sonner";
 import { MessageCircleX } from "lucide-react";
+import Avatar from "../components/ui/avatar";
+import HamburgerMenu from "../mini-components/hamburgerMenu";
+import { currentChat_store } from "../store/currentChat_store";
+import { userInfo_store } from "../store/userInfo_store";
+import ThemeToggle from "../theme/ThemeToggle";
 
 const Header = () => {
   // store
@@ -22,7 +19,7 @@ const Header = () => {
   };
 
   return (
-    <div className="flex flex-shrink-0 h-20 px-3 justify-between items-center">
+    <div className="flex flex-shrink-0 min-h-20 px-3 justify-between items-center">
       <ThemeToggle />
 
       {currentChat ? (

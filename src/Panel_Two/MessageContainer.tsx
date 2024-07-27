@@ -1,14 +1,13 @@
 import { useEffect, useRef } from "react";
-import { currentChat_store } from "../store/currentChat_store";
-import useFetchAllMessages from "../hooks/useFetchAllMessages";
+import { io } from "socket.io-client";
 import { v4 as uuid } from "uuid";
-import ChatBubble from "../mini-components/chatBubble";
-import { messageLists_store } from "../store/messageLists_store";
 import TypingAnimation from "../animation/TypingAnimation";
+import useFetchAllMessages from "../hooks/useFetchAllMessages";
+import ChatBubble from "../mini-components/chatBubble";
+import { currentChat_store } from "../store/currentChat_store";
+import { messageLists_store } from "../store/messageLists_store";
 import { socket_store } from "../store/socket_store";
 import { userInfo_store } from "../store/userInfo_store";
-import { io } from "socket.io-client";
-import { toast } from "sonner";
 
 const URL = "http://localhost:5000";
 const socket = io(URL);
@@ -20,12 +19,12 @@ const MessageContainer = () => {
   const { _id: currentUserId, rsa_private_key } = userInfo_store();
 
   const messageEndRef = useRef<HTMLDivElement>(null);
+  const typingIndicatorRef = useRef<HTMLDivElement>(null);
 
   // use a hook that fetches messages assciated with chat
   const { msgLists } = useFetchAllMessages();
 
   const scrollToEnd = () => {
-    toast.info("should scroll", { position: "top-center" });
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -49,7 +48,10 @@ const MessageContainer = () => {
   }, [currentUserId]);
 
   useEffect(() => {
-    messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    messageEndRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+    });
   }, [messageLists]);
 
   if (!currentChat)
@@ -65,7 +67,7 @@ const MessageContainer = () => {
       {messageLists == null ? (
         <p>Loading</p>
       ) : (
-        <div className="flex-1 flex px-2 py-2 overflow-y-auto flex-col gap-y-3 2xl:border 2xl:border-zinc-300 2xl:mx-2 2xl:rounded-lg xs:border-y xs:border-zinc-300 dark:sm:border-slate-700">
+        <div className="flex-1 flex px-2 py-2 overflow-y-auto flex-col gap-y-3 2xl:border border-zinc-300 border-y 2xl:border-l-0 dark:border-slate-700">
           {messageLists.map((message, index) => (
             <ChatBubble
               key={uuid()}
@@ -74,11 +76,11 @@ const MessageContainer = () => {
             />
           ))}
           {/* TODO: play typing animation */}
-          {isTyping && (
-            <div className="mt-auto">
-              <TypingAnimation />
-            </div>
-          )}
+
+          <div className="mt-auto" ref={typingIndicatorRef}>
+            {isTyping ? <TypingAnimation /> : null}
+          </div>
+
           <div ref={messageEndRef} />
         </div>
       )}

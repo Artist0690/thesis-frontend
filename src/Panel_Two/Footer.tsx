@@ -1,14 +1,15 @@
-import { ChangeEvent, useEffect, useState } from "react";
-import { IoSendSharp } from "react-icons/io5";
+import { cn } from "@udecode/cn";
+import { Send } from "lucide-react";
+import { ChangeEvent, useState } from "react";
+import { Socket } from "socket.io-client";
+import Button from "../components/ui/Button";
 import { sendMessage_controller } from "../controllers/sendMessage_controller";
+import { encrypt_msg } from "../crypto/AES/aes_crypto";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import useStartSocket from "../hooks/useStartSocket";
 import { currentChat_store } from "../store/currentChat_store";
 import { messageLists_store } from "../store/messageLists_store";
-import useAxiosPrivate from "../hooks/useAxiosPrivate";
-import { Socket } from "socket.io-client";
-import useStartSocket from "../hooks/useStartSocket";
 import { userInfo_store } from "../store/userInfo_store";
-import { encrypt_msg } from "../crypto/AES/aes_crypto";
-import { cn } from "@udecode/cn";
 
 type Props = {
   socket: Socket;
@@ -34,7 +35,7 @@ const Footer = (props: Props) => {
     socket,
   });
 
-  const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setinput(e.target.value);
   };
 
@@ -68,9 +69,9 @@ const Footer = (props: Props) => {
   };
 
   return (
-    <div className="flex h-20 gap-x-4 justify-start items-center px-3">
+    <div className="flex h-20 shrink-0 gap-x-4 justify-start items-center px-3">
       <div className="w-[calc(80%)] md:w-[400px]">
-        <input
+        {/* <input
           type="text"
           value={input}
           onChange={(e) => handleInput(e)}
@@ -78,17 +79,29 @@ const Footer = (props: Props) => {
           onBlur={handleStopTyping}
           placeholder="Type..."
           className="px-2 py-3 w-full font-sans text-sm md:text-base rounded-2xl outline-none focus:ring-[1px] focus:ring-violet-500 ring-offset-1 bg-white dark:bg-zinc-600 text-zinc-600 dark:text-white border border-zinc-300 dark:border-zinc-700 placeholder:text-md"
+        /> */}
+        <textarea
+          placeholder="Type your message..."
+          className="min-h-[48px] text-black bg-zinc-300/50 border border-neutral-400 dark:border-neutral-200/50 dark:bg-slate-700 dark:text-white font-[Inter] w-full resize-none rounded-xl px-4 pr-16 pt-1 shadow-sm focus:ring-purple-500 focus:ring-1 outline-none"
+          value={input}
+          onChange={(e) => handleInput(e)}
+          onFocus={(e) => handleTyping(e)}
+          onBlur={() => handleStopTyping()}
         />
       </div>
-      <div>
-        <IoSendSharp
-          className={cn(`md:size-8 size-6`, {
-            "text-purple-700 hover:text-purple-500": input.trim().length > 0,
-            "text-purple-300 hover:cursor-not-allowed dark:text-zinc-700":
-              input.trim().length < 1,
-          })}
+      <div className="flex h-full items-center justify-center">
+        <Button
           onClick={() => sendMessage()}
-        />
+          disabled={input.trim().length < 1}
+          className="p-2 disabled:dark:bg-slate-700/50 disabled:bg-zinc-300/50 disabled:hover:cursor-not-allowed disabled:shadow-none"
+        >
+          <Send
+            className={cn(`md:size-8 size-6 text-white`, {
+              "text-purple-300 hover:cursor-not-allowed dark:text-purple-700":
+                input.trim().length < 1,
+            })}
+          />
+        </Button>
       </div>
     </div>
   );

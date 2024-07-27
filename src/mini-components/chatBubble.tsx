@@ -1,14 +1,11 @@
-import React from "react";
+import { cn } from "@udecode/cn";
 import z from "zod";
-import { MessageSchema } from "../zod/chatSchema";
-import { userInfo_store } from "../store/userInfo_store";
-import ironman from "../assets/icons8-iron-man.svg";
-import hulk from "../assets/icons8-hulk.svg";
-import { messageLists_store } from "../store/messageLists_store";
+import Avatar from "../components/ui/avatar";
 import { getChatMateInfo } from "../functions/getChatMateId";
 import { chats_store } from "../store/chats_store";
-import Avatar from "../components/ui/avatar";
-import { cn } from "@udecode/cn";
+import { messageLists_store } from "../store/messageLists_store";
+import { userInfo_store } from "../store/userInfo_store";
+import { MessageSchema } from "../zod/chatSchema";
 
 type Message = z.infer<typeof MessageSchema>;
 
@@ -51,9 +48,10 @@ const ChatBubble = (props: Props) => {
           "order-1": !isCurrentUser,
         })}
       >
+        {/* content */}
         <div
           className={cn(
-            "flex p-2 2xl:max-w-[400px] max-w-[200px] rounded-lg shadow-lg dark:shadow-none",
+            "flex flex-col p-2 2xl:max-w-[400px] max-w-[200px] rounded-lg",
             {
               "rounded-br-none bg-zinc-200 dark:bg-slate-700 text-black dark:text-white": isCurrentUser,
               "rounded-bl-none bg-purple-500 dark:bg-purple-800 text-white": !isCurrentUser,
@@ -63,6 +61,8 @@ const ChatBubble = (props: Props) => {
         >
           {message.content}
         </div>
+        {/* -- content -- */}
+        {/* avatar */}
         <span
           className={cn("flex items-end w-4", {
             "order-first mr-2": !isCurrentUser,
@@ -79,6 +79,7 @@ const ChatBubble = (props: Props) => {
             </Avatar>
           )}
         </span>
+        {/* -- avatar -- */}
       </div>
     </div>
   );

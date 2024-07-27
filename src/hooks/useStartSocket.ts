@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Socket } from "socket.io-client";
-import { socket_store } from "../store/socket_store";
-import z from "zod";
-import { MessageSchema } from "../zod/chatSchema";
-import { messageLists_store } from "../store/messageLists_store";
 import { currentChat_store } from "../store/currentChat_store";
+import { messageLists_store } from "../store/messageLists_store";
+import { socket_store } from "../store/socket_store";
 
 type Props = {
   roomId: string;
@@ -42,7 +40,7 @@ const useStartSocket = (props: Props) => {
     };
   }, [socket]);
 
-  const handleTyping = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTyping = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     socket.emit("isTyping", { isTyping: true, roomId });
   };
 

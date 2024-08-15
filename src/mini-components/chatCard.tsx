@@ -5,7 +5,7 @@ import z from "zod";
 import Avatar from "../components/ui/avatar";
 import { currentChat_store } from "../store/currentChat_store";
 import { userInfo_store } from "../store/userInfo_store";
-import { ChatSchema } from "../zod/chatSchema";
+import { ChatSchema } from "../types/chatSchema";
 
 type Chat = z.infer<typeof ChatSchema>;
 

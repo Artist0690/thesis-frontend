@@ -7,7 +7,7 @@ import { io } from "socket.io-client";
 import { userInfo_store } from "../store/userInfo_store";
 import { toast } from "sonner";
 import z from "zod";
-import { MessageSchema } from "../zod/chatSchema";
+import { MessageSchema } from "../types/chatSchema";
 import { messageLists_store } from "../store/messageLists_store";
 import { chats_store } from "../store/chats_store";
 import { fetchAllChats_controller } from "../controllers/fetchAllChats_controller";

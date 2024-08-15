@@ -1,10 +1,9 @@
 import z from "zod";
 import { create, useStore } from "zustand";
-import { ChatSchema } from "../zod/chatSchema";
+import { ChatSchema } from "../types/chatSchema";
 import { produce } from "immer";
-import { PassphraseSchema } from "../zod/passphrase";
+import { PassphraseSchema } from "../types/passphrase";
 import { decrypt_RSA_cipher } from "../crypto/RSA/rsa_crypto";
-import { toast } from "sonner";
 
 type ChatSchema = z.infer<typeof ChatSchema>;
 

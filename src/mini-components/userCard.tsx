@@ -1,6 +1,6 @@
 import avatar from "../assets/icons8-iron-man.svg";
 import z from "zod";
-import { UserSchema } from "../zod/userSchema";
+import { UserSchema } from "../types/userSchema";
 import { currentChat_store } from "../store/currentChat_store";
 import { fetchChat_controller } from "../controllers/fetchChat_controller";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";

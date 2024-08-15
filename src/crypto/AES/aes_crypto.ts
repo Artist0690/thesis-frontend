@@ -8,8 +8,13 @@ type Enc_Props = {
 export const encrypt_msg = (props: Enc_Props) => {
   const { plaintext, passphrase } = props;
 
-  const cipher = CryptoJS.AES.encrypt(plaintext, passphrase);
-  return cipher.toString();
+  const key = CryptoJS.enc.Utf8.parse(passphrase);
+
+  const encrypted = CryptoJS.AES.encrypt(plaintext, key, {
+    mode: CryptoJS.mode.ECB,
+    padding: CryptoJS.pad.Pkcs7,
+  });
+  return encrypted.toString();
 };
 
 type Dec_Props = {
@@ -20,7 +25,11 @@ type Dec_Props = {
 export const decrypt_cipher = (props: Dec_Props) => {
   const { cipher, passphrase } = props;
 
-  const decipher = CryptoJS.AES.decrypt(cipher, passphrase);
-  var decryptedData = decipher.toString(CryptoJS.enc.Utf8);
-  return decryptedData;
+  const key = CryptoJS.enc.Utf8.parse(passphrase);
+
+  const decrypted = CryptoJS.AES.decrypt(cipher, key, {
+    mode: CryptoJS.mode.ECB,
+    padding: CryptoJS.pad.Pkcs7,
+  });
+  return decrypted.toString(CryptoJS.enc.Utf8);
 };

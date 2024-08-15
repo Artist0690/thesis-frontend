@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { currentChat_store } from "../store/currentChat_store";
 import { axiosPrivate } from "../api/axios";
 import z, { string } from "zod";
-import { MessageSchema } from "../zod/chatSchema";
+import { MessageSchema } from "../types/chatSchema";
 import { messageLists_store } from "../store/messageLists_store";
 import { decrypt_cipher } from "../crypto/AES/aes_crypto";
 

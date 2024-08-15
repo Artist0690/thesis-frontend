@@ -1,6 +1,5 @@
-import z from "zod";
-import { ChatSchema } from "../zod/chatSchema";
-import { axiosPrivate } from "../api/axios";
+import z, { ZodError } from "zod";
+import { ChatSchema } from "../types/chatSchema";
 import { AxiosInstance } from "axios";
 
 type Chat = z.infer<typeof ChatSchema>;
@@ -12,20 +11,16 @@ type Props = {
 
 export const fetchAllChats_controller = async (payload: Props) => {
   const { setChatLists, fetcher } = payload;
-  fetcher
-    .post("chats/get_all_chats")
-    .then((response) => {
-      console.log(response.data);
-      const check_chatLists = z.array(ChatSchema).safeParse(response.data);
-      if (!check_chatLists.success) {
-        console.log("Chat Lists Type Mismatch!");
-        console.log("ChatList Type error:", check_chatLists.error);
-        return;
-      }
-      const chatLists = check_chatLists.data;
-      setChatLists(chatLists);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  try {
+    const response = fetcher.post("chats/get_all_chats");
+
+    const chatLists = z.array(ChatSchema).parse((await response).data);
+    setChatLists(chatLists);
+  } catch (error) {
+    if (error instanceof ZodError) {
+      console.log("Chat list type mismatch", error.message);
+    }
+
+    console.log("Fail to load chats. Axios Error");
+  }
 };

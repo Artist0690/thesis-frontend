@@ -4,7 +4,7 @@ import cross_icon from "../assets/close-line-icon.svg";
 import { searchUser_controller } from "../controllers/searchUser_controller";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import z from "zod";
-import { UserSchema } from "../zod/userSchema";
+import { UserSchema } from "../types/userSchema";
 import UserCard from "./userCard";
 import { v4 as uuid } from "uuid";
 import { motion } from "framer-motion";

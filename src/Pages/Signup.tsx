@@ -7,7 +7,7 @@ import z from "zod";
 import { signup_controller } from "../controllers/signup_controller";
 import KeyGeneration from "../crypto/RSA/KeyGeneration";
 import { dexie_db } from "../dexie_db/db";
-import { signupResponseSchema } from "../zod/signupResponse";
+import { signupResponseSchema } from "../types/signupResponse";
 
 const Signup_Page = () => {
   const errorMessageSchema = z.object({ message: z.string() });

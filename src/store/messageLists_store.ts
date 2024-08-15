@@ -1,8 +1,7 @@
 import z from "zod";
-import { MessageSchema } from "../zod/chatSchema";
+import { MessageSchema } from "../types/chatSchema";
 import { create } from "zustand";
 import { produce } from "immer";
-import { toast } from "sonner";
 
 type MessageSchema = z.infer<typeof MessageSchema>;
 

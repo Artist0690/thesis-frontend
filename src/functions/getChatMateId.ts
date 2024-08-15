@@ -1,5 +1,5 @@
 import z from "zod";
-import { ChatSchema, MessageSchema } from "../zod/chatSchema";
+import { ChatSchema, MessageSchema } from "../types/chatSchema";
 
 type Chat = z.infer<typeof ChatSchema>;
 type Message = z.infer<typeof MessageSchema>;

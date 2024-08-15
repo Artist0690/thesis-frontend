@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import useAxiosPrivate from "./useAxiosPrivate";
 import { userInfo_store } from "../store/userInfo_store";
-import { ChatSchema } from "../zod/chatSchema";
+import { ChatSchema } from "../types/chatSchema";
 import { chats_store } from "../store/chats_store";
 import z from "zod";
 

@@ -15,6 +15,6 @@ export const retrievePrvKey_controller = async (payload: Props) => {
   if (keyData.length > 0) {
     const prvKey = keyData[0].key;
     setKey({ rsa_private_key: prvKey });
-    // console.log(prvKey);
+    console.log(prvKey);
   }
 };

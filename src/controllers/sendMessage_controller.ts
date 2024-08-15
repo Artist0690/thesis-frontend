@@ -1,6 +1,6 @@
 import z from "zod";
 import { toast } from "sonner";
-import { MessageSchema } from "../zod/chatSchema";
+import { MessageSchema } from "../types/chatSchema";
 import { AxiosInstance } from "axios";
 import { Socket } from "socket.io-client";
 import { decrypt_cipher } from "../crypto/AES/aes_crypto";

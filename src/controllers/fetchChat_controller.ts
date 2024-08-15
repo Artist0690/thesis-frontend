@@ -1,5 +1,5 @@
-import z from "zod";
-import { ChatSchema } from "../zod/chatSchema";
+import z, { ZodError } from "zod";
+import { ChatSchema } from "../types/chatSchema";
 import { AxiosInstance } from "axios";
 import { toast } from "sonner";
 
@@ -18,21 +18,22 @@ export const fetchChat_controller = async (params: Params) => {
   try {
     const response = await fetcher.post("chats/chat", { chatMateId });
 
-    const chat = ChatSchema.safeParse(response.data);
-    if (!chat.success) {
-      toast.error("chat type mismatch from fetchChat_controller", {
-        position: "top-right",
-        duration: 3000,
-      });
-      console.warn("Chat Type Mismatch from fetchChat_controller", chat.error);
-      console.warn(response.data);
+    const chat = ChatSchema.parse(response.data);
+
+    addToChatLists(chat);
+    setCurrentChat(chat);
+  } catch (error) {
+    if (error instanceof ZodError) {
+      toast(
+        `Chat Type Mismatch from fetchChat_controller::: ${JSON.stringify(
+          error.message
+        )}`,
+        {
+          position: "top-center",
+        }
+      );
       return;
     }
-    const singleChat = chat.data;
-
-    addToChatLists(singleChat);
-    setCurrentChat(singleChat);
-  } catch (error) {
     console.log(error);
   }
 };

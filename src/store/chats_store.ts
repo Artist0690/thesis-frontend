@@ -1,5 +1,5 @@
 import z from "zod";
-import { ChatSchema } from "../zod/chatSchema";
+import { ChatSchema } from "../types/chatSchema";
 import { create } from "zustand";
 import { produce } from "immer";
 import { toast } from "sonner";

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import z from "zod";
-import { ChatSchema, MessageSchema } from "../zod/chatSchema";
+import { ChatSchema, MessageSchema } from "../types/chatSchema";
 import ChatCard from "../mini-components/chatCard";
 import { v4 } from "uuid";
 import ScrollableFeed from "react-scrollable-feed";

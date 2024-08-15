@@ -5,7 +5,7 @@ import { getChatMateInfo } from "../functions/getChatMateId";
 import { chats_store } from "../store/chats_store";
 import { messageLists_store } from "../store/messageLists_store";
 import { userInfo_store } from "../store/userInfo_store";
-import { MessageSchema } from "../zod/chatSchema";
+import { MessageSchema } from "../types/chatSchema";
 
 type Message = z.infer<typeof MessageSchema>;
 

@@ -1,7 +1,7 @@
 import { AxiosInstance } from "axios";
 import z from "zod";
 import { toast } from "sonner";
-import { UserSchema } from "../zod/userSchema";
+import { UserSchema } from "../types/userSchema";
 
 type User = z.infer<typeof UserSchema>;
 

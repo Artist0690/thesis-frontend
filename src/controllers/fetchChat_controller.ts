@@ -18,12 +18,14 @@ export const fetchChat_controller = async (params: Params) => {
   try {
     const response = await fetcher.post("chats/chat", { chatMateId });
 
+    console.log("chat data", response.data);
     const chat = ChatSchema.parse(response.data);
 
     addToChatLists(chat);
     setCurrentChat(chat);
   } catch (error) {
     if (error instanceof ZodError) {
+      console.log("Chat type error from fetchat_controller:::", error.message);
       toast(
         `Chat Type Mismatch from fetchChat_controller::: ${JSON.stringify(
           error.message
